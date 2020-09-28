@@ -9,11 +9,15 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const mongoose = require("mongoose");
 const hbs = require("hbs");
-
-
 var indexRouter = require('./routes/index');
+var authRouter = require('./routes/auth');
 var usersRouter = require('./routes/users');
+const flash = require("connect-flash");
+const session = require("express-session");
+const MongoStore = require("connect-mongo")(session);
+
 
 var app = express();
 
@@ -28,9 +32,25 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')))
+
+app.use(
+  session({
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {},
+  })
+  );
+
+app.use(flash());
+
+app.use(require("./middleware/exposeFlashMessage.js"))
+
 
 app.use('/', indexRouter);
+app.use('/signup', authRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
@@ -49,7 +69,7 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
+console.log(err)
   // render the error page
   res.status(err.status || 500);
   res.render('error');
