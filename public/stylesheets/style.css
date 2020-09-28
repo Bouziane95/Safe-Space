@@ -3,6 +3,11 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+#map-form {
+  display: flex;
+  flex-direction: row;
+}
+
 a {
   color: #00B7FF;
 }
