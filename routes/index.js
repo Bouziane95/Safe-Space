@@ -2,23 +2,87 @@ var express = require('express');
 var router = express.Router();
 const bcrypt = require("bcrypt");
 const salt = 10;
+const Asso = require("../models/Assos")
+const uploader = require("../config/cloudinary");
 
 //MODEL
 const UserModel = require("../models/User");
-
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('map');
 });
 
-router.get('/signup', function(req, res, next) {
-  res.render('signup');
+router.get('/testimonials', function(req, res, next) {
+  res.render('testimonials');
+});
+
+router.get('/events', function(req, res, next) {
+  res.render('events');
+});
+
+
+router.get("/associations", (req, res, next) => {
+  console.log(req.body, "this is body");
+  console.log(req.params, "this is req params-----");
+
+
+ Asso.find({})
+   .then((dbResult) => {
+     res.render("assos.hbs", { assos: dbResult });
+   })
+   .catch((error) => {
+     next(error);
+   });
+});
+
+router.get("/createAsso", (req, res, next) => {
+  res.render("create_form_asso");
+});
+
+
+router.post("/createAsso", uploader.single("image"),
+
+  async (req, res, next) => {
+
+    const newAsso = req.body;
+
+    if (req.file) {
+      req.body.image = req.file.path;
+    }
+
+    try {
+      const dbResult = await Asso.create(newAsso);
+      res.redirect("/assos");
+    } catch (error) {
+      next(error);
+    }
+    
+  }
+);
+
+
+////////////
+// AUTH ROUTES
+
+router.get('/signin', function(req, res, next) {
+  res.render('signInUser');
 });
 
 router.get('/signin', function(req, res, next) {
-  res.render('signin');
+  res.render('signUpUser');
 });
+
+router.get('/signup', function(req, res, next) {
+  res.render('choiceSignup');
+});
+
+router.get('/signin', function(req, res, next) {
+  res.render('choiceSignin');
+});
+
+///////////
+//AUTH CHOICES
 
 router.post("/addUser", async (req, res, next) => {
   try {
@@ -64,5 +128,7 @@ router.post("/signin", async (req, res, next) => {
     }
   }
 });
+
+
 
 module.exports = router;

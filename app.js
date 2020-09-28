@@ -11,6 +11,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require("mongoose");
 const hbs = require("hbs");
+
+
+// const mongoose = require("mongoose");
+
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var usersRouter = require('./routes/users');
@@ -74,6 +78,8 @@ console.log(err)
   res.status(err.status || 500);
   res.render('error');
 });
+
+
 
 // ROUTES
 // INSERT ROUTES HERE
