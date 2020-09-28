@@ -3,12 +3,15 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const AssosSchema = new Schema({
-  Name: String,
-  Address: String,
-  Contact: String,
-  Description: String,
+  name: String,
+  address: String,
+  tel: String,
+  mail: String,
+  description: String,
+  link: String,
+  image: String,
 });
 
-const Assos = mongoose.model("Assos", AssosSchema);
+const Asso = mongoose.model("Asso", AssosSchema);
 
-module.exports = Event;
+module.exports = Asso;
