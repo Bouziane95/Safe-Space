@@ -1,14 +1,14 @@
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 
-const Schema = mongoose.Schema;
+// const Schema = mongoose.Schema;
 
-const EventSchema = new Schema({
-  Picture: String,
-  Time: Date,
-  Address: String,
-  Description: String,
-});
+// const EventSchema = new Schema({
+//   Picture: String,
+//   Time: Date,
+//   Address: String,
+//   Description: String,
+// });
 
-const Event = mongoose.model("Event", EventSchema);
+// const Event = mongoose.model("Event", EventSchema);
 
-module.exports = Event;
+// module.exports = Event;
