@@ -1,13 +1,8 @@
-<h1>S'inscrire</h1>
+<h1>Se connecter</h1>
 
-<section id="sign-up">
+<section id="sign-in">
   
-  <form method="POST" action="/addUser" id="form-user">
-
-    <div>
-      <label for="pseudo" class="pseudo-label">Pseudonyme</label>
-      <input id="user-pseudo" type="text" placeholder="toto" name="pseudo" required value="Pseudo">
-    </div>
+  <form method="POST" action="/signInAsso" id="form-user">
 
     <div>
       <label for="email" class="email-label">Email</label>
@@ -21,9 +16,7 @@
 
     <button class="button-primary white">S'inscrire</button>
   </form>
+  
   {{> flash_message}}
 
-  <p>Vous possedez déjà un compte ?
-      <a href="/signin" class="button-link-form">Se connecter</a>
-  </p>
 </section>

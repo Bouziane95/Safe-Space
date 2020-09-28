@@ -1,0 +1,29 @@
+<h1>S'inscrire</h1>
+
+<section id="sign-up-user">
+  
+  <form method="POST" action="/addUser" id="form-user">
+
+    <div>
+      <label for="pseudo" class="pseudo-label">Pseudonyme</label>
+      <input id="user-pseudo" type="text" placeholder="toto" name="pseudo" required value="Pseudo">
+    </div>
+
+    <div>
+      <label for="email" class="email-label">Email</label>
+      <input id="user-email" type="email" placeholder="yo@gmail.com" name="email" required value="yo@gmail.com">
+    </div>
+
+    <div>
+      <label for="password" class="password-label">Password</label>
+      <input id="user-password" type="password" placeholder="••••••" name="password" required value="1234">
+    </div>
+
+    <button class="button-primary white">S'inscrire</button>
+  </form>
+  {{> flash_message}}
+
+  <p>Vous possedez déjà un compte ?
+      <a href="/signinUser" class="button-link-form">Se connecter</a>
+  </p>
+</section>
