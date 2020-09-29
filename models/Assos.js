@@ -6,9 +6,10 @@ const AssosSchema = new Schema({
   name: String,
   address: String,
   tel: String,
-  mail: String,
+  email: String,
   description: String,
   link: String,
+  password: String,
   image: String,
 });
 

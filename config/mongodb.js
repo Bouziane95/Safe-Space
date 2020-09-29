@@ -1,6 +1,3 @@
-// ici on va connecter notre application back à la bdd
-// https://mongoosejs.com/
-
 const mongoose = require("mongoose");
 
 mongoose.connect(process.env.MONGO_URI, {

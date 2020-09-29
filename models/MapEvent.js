@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const mapEventSchema = new Schema({
+const MapEventSchema = new Schema({
   time: Date,
   address: String,
   coordinates: {
@@ -12,6 +12,6 @@ const mapEventSchema = new Schema({
   details: String,
 });
 
-const MapEvent = mongoose.model("MapEvent", mapEventSchema);
+const MapEvent = mongoose.model("MapEvent", MapEventSchema);
 
 module.exports = MapEvent;
