@@ -1,3 +1,22 @@
+import APIHandler from "./APIHandler.js";
+const adressAPI = new APIHandler(
+  "https://api.mapbox.com/geocoding/v5/mapbox.places"
+);
+
+const safeSpaceAPI = new APIHandler();
+
+const formMapEvent = document.querySelector(".form-card");
+const map = document.getElementById("map");
+const removeFormMapEvent = document.getElementById("return-button");
+
+function removeForm() {
+  formMapEvent.style.display = "none";
+}
+
+function createMarker(lat, lng) {}
+
+removeFormMapEvent.onclick = removeForm;
+
 var options = {
   enableHighAccuracy: true,
   timeout: 5000,
@@ -17,6 +36,26 @@ function success(pos) {
     center: [crd.longitude, crd.latitude],
   });
 
+  map.on("load", () => {
+    safeSpaceAPI
+      .get("/map")
+      .then((response) => {
+        const event = response.data;
+        for (let i = 0; i < event.length; i++) {
+          console.log(event[i].coordinates);
+          var marker = new mapboxgl.Marker()
+            .setLngLat([
+              event[i].coordinates.latitude,
+              event[i].coordinates.longitude,
+            ])
+            .addTo(map);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+
   map.addControl(
     new mapboxgl.GeolocateControl({
       positionOptions: {
@@ -33,10 +72,24 @@ function success(pos) {
   map.on("click", function (e) {
     var latitude = e.lngLat.lat;
     var longitude = e.lngLat.lng;
+    adressAPI
+      .createAdress({ lat: latitude, lng: longitude })
+      .then((response) => {
+        const adress = response.data;
+        document.getElementById("coordinateLat").value = adress.query[0];
+        document.getElementById("coordinateLong").value = adress.query[1];
+        document.getElementById("adress").value = adress.features[0].place_name;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    formMapEvent.style.display = "flex";
 
     var marker = new mapboxgl.Marker()
       .setLngLat([longitude, latitude])
       .addTo(map);
+    console.log(latitude, longitude);
   });
 }
 
@@ -45,3 +98,4 @@ function error(err) {
 }
 
 navigator.geolocation.getCurrentPosition(success, error, options);
+

@@ -1,28 +1,50 @@
-
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 const bcrypt = require("bcrypt");
 const salt = 10;
 const uploader = require("../config/cloudinary");
-
 //MODELS
 const UserModel = require("../models/User");
 const AssoModel = require("../models/Assos");
 const MapEventModel = require("../models/MapEvent");
+const MapEvent = require("../models/MapEvent");
 
+router.post("/map", async (req, res, next) => {
+  try {
+    const newEvent = req.body;
+    const createdEvent = await MapEvent.create(newEvent);
+    //Mettre createdEvent dans le redirect pour crée ensuite un object avec les coordonnes et le donner au front
+    res.redirect("/");
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/map", async (req, res, next) => {
+  try {
+    const mapEvent = await MapEvent.find();
+    res.send(mapEvent);
+  } catch (error) {
+    next(error);
+    return error;
+  }
+});
 
 router.get('/', function(req, res, next) {
   res.render('map');
 });
 
-router.get('/testimonials', function(req, res, next) {
-  res.render('testimonials');
+router.get("/map", function (req, res) {
+  res.render("map");
 });
 
-router.get('/events', function(req, res, next) {
-  res.render('events');
+router.get("/testimonials", function (req, res, next) {
+  res.render("testimonials");
 });
 
+router.get("/events", function (req, res, next) {
+  res.render("events");
+});
 
 /* GET association page. */
 router.get("/associations", (req, res, next) => {
@@ -98,8 +120,6 @@ router.get("/mes-informations", async (req, res, next) => {
   next(error);
 }
 });
-
-
   
 // AssoModel.findById(req.session.currentUser._id).then({})
 //  MapEventModel.find({}) // --- ^
@@ -136,16 +156,16 @@ router.get("/historique_mapEvents_row/:id/delete", (req, res, next) => {
 
 ////// SIGN UP
 
-router.get('/signup', function(req, res, next) {
-  res.render('choiceSignup');
+router.get("/signup", function (req, res, next) {
+  res.render("choiceSignup");
 });
 
-router.get('/signUpUser', function(req, res, next) {
-  res.render('signUpUser');
+router.get("/signUpUser", function (req, res, next) {
+  res.render("signUpUser");
 });
 
-router.get('/signUpAsso', function(req, res, next) {
-  res.render('signUpAsso');
+router.get("/signUpAsso", function (req, res, next) {
+  res.render("signUpAsso");
 });
 
 router.post("/addUser", async (req, res, next) => {
@@ -161,7 +181,7 @@ router.post("/addUser", async (req, res, next) => {
       const hashedPassword = bcrypt.hashSync(newUser.password, salt);
       newUser.password = hashedPassword;
       const user = await UserModel.create(newUser);
-      
+
       res.redirect("/signInUser");
     }
   } catch (error) {
@@ -182,7 +202,7 @@ router.post("/addAsso", async (req, res, next) => {
       const hashedPassword = bcrypt.hashSync(newUser.password, salt);
       newUser.password = hashedPassword;
       const user = await AssoModel.create(newUser);
-      
+
       res.redirect("/signInAsso");
     }
   } catch (error) {
@@ -192,16 +212,16 @@ router.post("/addAsso", async (req, res, next) => {
 
 /////// SIGN IN
 
-router.get('/signin', function(req, res, next) {
-  res.render('choiceSignin');
+router.get("/signin", function (req, res, next) {
+  res.render("choiceSignin");
 });
 
-router.get('/signInUser', function(req, res, next) {
-  res.render('signInUser');
+router.get("/signInUser", function (req, res, next) {
+  res.render("signInUser");
 });
 
-router.get('/signInAsso', function(req, res, next) {
-  res.render('signInAsso');
+router.get("/signInAsso", function (req, res, next) {
+  res.render("signInAsso");
 });
 
 router.post("/signInUser", async (req, res, next) => {

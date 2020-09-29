@@ -10,6 +10,7 @@
     "map.event.seed": "nodemon ./bin/map.event.seeds.js"
   },
   "dependencies": {
+    "axios": "^0.20.0",
     "bcrypt": "^5.0.0",
     "cloudinary": "^1.23.0",
     "connect-flash": "^0.1.1",
