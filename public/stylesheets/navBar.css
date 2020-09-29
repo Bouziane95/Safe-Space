@@ -1,0 +1,45 @@
+.logo-img {
+  max-height: 170px;
+  max-width: 120px;
+}
+
+.nav-flex {
+  background-color: white;
+  height: 55px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+}
+
+.ul-flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: baseline;
+  align-content: stretch;
+}
+
+.nav-list {
+    list-style-type: none;
+}
+
+.nav-flex a {
+    text-decoration: none;
+    color: black;
+}
+
+
+/* @media only screen and (min-width:450px) { 
+      .nav-title{ font-size: 600px;}
+  } */
+
+
+  /* HOVER FOR THE NAVBAR */
+
+  
+  

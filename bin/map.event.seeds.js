@@ -2,7 +2,7 @@ require("dotenv").config();
 require("./../config/mongodb");
 
 const mongoose = require("mongoose");
-const MapEvent = require("../models/MapEvent");
+const MapEventModel = require("../models/MapEvent");
 
 const mapEvents = [
   {
@@ -36,7 +36,7 @@ mongoose
   useUnifiedTopology: true,
 })
 .then((self) => {
-    MapEvent.create(mapEvents)
+    MapEventModel.create(mapEvents)
     .then((dbResult) => {
       console.log(dbResult);
     })

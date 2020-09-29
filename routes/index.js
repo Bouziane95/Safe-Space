@@ -30,9 +30,8 @@ router.get("/map", async (req, res, next) => {
   }
 });
 
-/* GET home page. */
-router.get("/", function (req, res, next) {
-  res.render("map");
+router.get('/', function(req, res, next) {
+  res.render('map');
 });
 
 router.get("/map", function (req, res) {
@@ -47,67 +46,100 @@ router.get("/events", function (req, res, next) {
   res.render("events");
 });
 
+/* GET association page. */
 router.get("/associations", (req, res, next) => {
   console.log(req.body, "this is body");
   console.log(req.params, "this is req params-----");
 
-  Asso.find({})
-    .then((dbResult) => {
-      res.render("assos.hbs", { assos: dbResult });
-    })
-    .catch((error) => {
-      next(error);
-    });
+ AssoModel.find({})
+   .then((dbResult) => {
+     res.render("assos", { assos: dbResult });
+   })
+   .catch((error) => {
+     next(error);
+   });
 });
 
-router.get("/createAsso", (req, res, next) => {
-  res.render("create_form_asso");
+
+/* GET create association page. */
+// router.get("/createAsso", (req, res, next) => {
+//   res.render("create_form_asso");
+// });
+
+
+// router.post("/createAsso", uploader.single("image"),
+
+//   async (req, res, next) => {
+
+//     const newAsso = req.body;
+
+//     if (req.file) {
+//       req.body.image = req.file.path;
+//     }
+
+//     try {
+//       const dbResult = await Asso.create(newAsso);
+//       res.redirect("/assos");
+//     } catch (error) {
+//       next(error);
+//     }
+    
+//   }
+// );
+
+// router.get("/one-product/:id", (req, res, next) => {
+  
+//   const sneakerId = req.params.id;
+//   Sneaker.findById(sneakerId)
+//     .then((dbResult) => {
+//       res.render("one_product",  { sneakers: dbResult }); 
+//     })
+//     .catch((error) => {
+//       next(error); 
+//     });
+// });
+
+/* GET page mes informations */
+
+// router.get("/mes-informations", (req, res) => {
+//   res.render("mes_informations");
+// });
+
+router.get("/mes-informations", (req, res, next) => {
+
+ MapEventModel.find({}) // --- ^
+   .then((dbResult) => {
+     res.render("mes_informations", { mapEvents: dbResult });
+   })
+   .catch((error) => {
+     next(error);
+   });
 });
 
-router.post(
-  "/createAsso",
-  uploader.single("image"),
+router.get("/historique_mapEvents_row/:id/delete", (req, res, next) => {
 
-  async (req, res, next) => {
-    const newAsso = req.body;
-
-    if (req.file) {
-      req.body.image = req.file.path;
-    }
-
-    try {
-      const dbResult = await Asso.create(newAsso);
-      res.redirect("/assos");
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-router.get("/gestion-evenements", (req, res, next) => {
-  MapEventModel.find({}) // --- ^
-    .then((dbResult) => {
-      res.render("map_events_manage", { mapEvents: dbResult });
-    })
-    .catch((error) => {
-      next(error);
-    });
-});
-
-router.get("/dashboard_mapEvents_row/:id/delete", (req, res, next) => {
   const mapEventsId = req.params.id;
   MapEventModel.findByIdAndDelete(mapEventsId)
     .then((dbResult) => {
-      res.redirect("/gestion-evenements"); // Redirect to "/labels" after delete is successful
+      res.redirect("/mes-informations"); // Redirect to "/labels" after delete is successful
     })
     .catch((error) => {
       next(error); // Sends us to the error handler middleware in app.js if an error occurs
     });
 });
 
+
+// router.get("/one-product/:id", (req, res) => {
+//   res.render("one_product");
+// });
+
+
+
+
+
 //////////// AUTH ROUTES
 
-////// SIGN OUT
+////// SIGN UP
 
 router.get("/signup", function (req, res, next) {
   res.render("choiceSignup");
@@ -224,5 +256,7 @@ router.post("/signInAsso", async (req, res, next) => {
     }
   }
 });
+
+
 
 module.exports = router;
