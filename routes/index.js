@@ -13,13 +13,22 @@ router.post("/map", async (req, res, next) => {
   try {
     const newEvent = req.body;
     const createdEvent = await MapEvent.create(newEvent);
-    res.redirect("/map");
+    //Mettre createdEvent dans le redirect pour crée ensuite un object avec les coordonnes et le donner au front
+    res.redirect("/");
   } catch (error) {
     next(error);
   }
 });
 
-
+router.get("/map", async (req, res, next) => {
+  try {
+    const mapEvent = await MapEvent.find();
+    res.send(mapEvent);
+  } catch (error) {
+    next(error);
+    return error;
+  }
+});
 
 /* GET home page. */
 router.get("/", function (req, res, next) {

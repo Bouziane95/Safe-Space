@@ -10,6 +10,10 @@ class APIHandler {
   createAdress({ lat, lng }) {
     return this.service.get(`/${lng},${lat}.json?${token}`);
   }
+
+  get(endpoint) {
+    return this.service.get(endpoint);
+  }
 }
 
 export default APIHandler;
