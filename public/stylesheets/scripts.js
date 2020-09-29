@@ -13,8 +13,6 @@ function removeForm() {
   formMapEvent.style.display = "none";
 }
 
-function createMarker(lat, lng) {}
-
 removeFormMapEvent.onclick = removeForm;
 
 var options = {
