@@ -1,3 +1,4 @@
+
 var express = require('express');
 var router = express.Router();
 const bcrypt = require("bcrypt");
@@ -6,7 +7,9 @@ const uploader = require("../config/cloudinary");
 
 //MODELS
 const UserModel = require("../models/User");
-const AssoModel = require("../models/Assos")
+const AssoModel = require("../models/Assos");
+const MapEventModel = require("../models/MapEvent");
+
 
 router.get('/', function(req, res, next) {
   res.render('map');
@@ -59,6 +62,29 @@ router.post("/createAsso", uploader.single("image"),
     
   }
 );
+
+router.get("/gestion-evenements", (req, res, next) => {
+
+ MapEventModel.find({}) // --- ^
+   .then((dbResult) => {
+     res.render("map_events_manage", { mapEvents: dbResult });
+   })
+   .catch((error) => {
+     next(error);
+   });
+});
+
+router.get("/dashboard_mapEvents_row/:id/delete", (req, res, next) => {
+
+  const mapEventsId = req.params.id;
+  MapEventModel.findByIdAndDelete(mapEventsId)
+    .then((dbResult) => {
+      res.redirect("/gestion-evenements"); // Redirect to "/labels" after delete is successful
+    })
+    .catch((error) => {
+      next(error); // Sends us to the error handler middleware in app.js if an error occurs
+    });
+});
 
 
 //////////// AUTH ROUTES
@@ -180,5 +206,7 @@ router.post("/signInAsso", async (req, res, next) => {
     }
   }
 });
+
+
 
 module.exports = router;

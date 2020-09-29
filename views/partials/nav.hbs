@@ -1,19 +1,23 @@
-<div>
-    <h1>Safe Space</h1>
-</div>
-<div>
-    <ul>
-        <li>Carte</li>
-        <li> <a href="/assos"> Associations </a> </li>
-        <li> <a href="/events"> Évènements </a></li>
-        <li> <a href="/testimonials"> Témoignages </a> </li>
-        <li>Vidéos</li>
-    </ul>
-</div>
+{{!-- <div class="nav-flex">
 
-<div>
-    <ul>
-        <li> <a href="/signin">Se connecter</a></li>
-        <li> <a href="/signup">S'enregistrer</a></li>
-    </ul>
+    <img class="logo-img" src="images/SafeLogo.png" alt="SafeLogo">
+    <a class="btn from-bottom" href="/carte">Carte</a>
+    <a href="/assos"> Associations </a> </li>
+    {{#if isLoggedIn}}
+    <a href="/gestion-evenements">Gestion de mes événements</a>
+    {{/if}}
+    <a href="/signin">Se connecter</a></li>
+    <a href="/signup">S'enregistrer</a></li>
+
+</div> --}}
+
+<div class="ui six item menu">
+
+  <img class ="item logo-img" src="images/SafeLogo.png" alt="SafeLogo">
+  <a class="item" href="/carte">Carte</a>
+  <a class="item" href="/assos">Associations</a>
+  <a class="item" href="/gestion-evenements">Événements</a>
+  <a class="item" href="/signin">Se connecter</a>
+  <a class="item" href="/signup">S'enregistrer</a>
+
 </div>
