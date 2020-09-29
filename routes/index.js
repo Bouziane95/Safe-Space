@@ -8,7 +8,6 @@ const uploader = require("../config/cloudinary");
 const UserModel = require("../models/User");
 const AssoModel = require("../models/Assos")
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('map');
 });
@@ -64,7 +63,7 @@ router.post("/createAsso", uploader.single("image"),
 
 //////////// AUTH ROUTES
 
-////// SIGN OUT
+////// SIGN UP
 
 router.get('/signup', function(req, res, next) {
   res.render('choiceSignup');
