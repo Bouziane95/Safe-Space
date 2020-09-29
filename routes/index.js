@@ -3,11 +3,23 @@ var router = express.Router();
 const bcrypt = require("bcrypt");
 const salt = 10;
 const uploader = require("../config/cloudinary");
-
 //MODELS
 const UserModel = require("../models/User");
 const AssoModel = require("../models/Assos");
 const MapEventModel = require("../models/MapEvent");
+const MapEvent = require("../models/MapEvent");
+
+router.post("/map", async (req, res, next) => {
+  try {
+    const newEvent = req.body;
+    const createdEvent = await MapEvent.create(newEvent);
+    res.redirect("/map");
+  } catch (error) {
+    next(error);
+  }
+});
+
+
 
 /* GET home page. */
 router.get("/", function (req, res, next) {

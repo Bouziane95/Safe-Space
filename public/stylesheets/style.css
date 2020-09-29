@@ -2,9 +2,14 @@
   text-align: center;
 }
 
+#user-box-hidden {
+  display: none;
+}
+
 #map-form {
   display: flex;
   flex-direction: row;
+
 }
 
 .form-card {

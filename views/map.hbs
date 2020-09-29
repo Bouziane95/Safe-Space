@@ -1,7 +1,7 @@
 <div id="map-form">
     <div id='map' style='width: 1100px; height: 500px;'></div>
     <div class="form-card">
-        <form>
+        <form method="POST" action="/map">
             <div class="user-box">
                 <label>Date et Heure</label>
                 <input type="datetime-local" name="time" required="">
@@ -14,7 +14,14 @@
             <br>
             <div class="user-box">
                 <label>Adresse</label>
-                <input type="text" name="adress" required="">
+                <input id="adress" type="text" name="address" required="">
+            </div>
+            <br>
+            <div class="user-box">
+                <div id="user-box-hidden">
+                    <input id="coordinateLat" type="text" name="coordinates.latitude" required="">
+                    <input id="coordinateLong" type="text" name="coordinates.longitude" required="">
+                </div>
             </div>
             <br>
             <a href="#">
