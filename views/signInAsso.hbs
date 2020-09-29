@@ -1,6 +1,6 @@
 <h1>Se connecter</h1>
 
-<section id="sign-in">
+{{!-- <section id="sign-in">
   
   <form method="POST" action="/signInAsso" id="form-user">
 
@@ -19,4 +19,27 @@
   
   {{> flash_message}}
 
-</section>
+</section> --}}
+
+<form action="POST" action="/signInAsso">
+  <div class="ui form">
+
+    <div class="field">
+
+      <label for="email" class="email-label">Email</label>
+      <input type="email" placeholder="monmail@mail.com" name="email">
+
+    </div>
+
+    <div class="field">
+
+      <label>Mot de passe</label>
+      <input type="password" placeholder="••••••" name="password">
+
+    </div>
+<button class="ui secondary button">
+  Se connecter
+</button>
+  </div>
+</form>
+ {{> flash_message}}

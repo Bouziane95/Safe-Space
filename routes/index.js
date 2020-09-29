@@ -11,7 +11,6 @@ const AssoModel = require("../models/Assos");
 const MapEventModel = require("../models/MapEvent");
 
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('map');
 });
@@ -118,7 +117,7 @@ router.get("/historique_mapEvents_row/:id/delete", (req, res, next) => {
 
 //////////// AUTH ROUTES
 
-////// SIGN OUT
+////// SIGN UP
 
 router.get('/signup', function(req, res, next) {
   res.render('choiceSignup');
@@ -235,5 +234,7 @@ router.post("/signInAsso", async (req, res, next) => {
     }
   }
 });
+
+
 
 module.exports = router;

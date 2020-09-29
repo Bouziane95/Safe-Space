@@ -36,7 +36,7 @@ mongoose
   useUnifiedTopology: true,
 })
 .then((self) => {
-  MapEventModel.create(mapEvents)
+    MapEventModel.create(mapEvents)
     .then((dbResult) => {
       console.log(dbResult);
     })
