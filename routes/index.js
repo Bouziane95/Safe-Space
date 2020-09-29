@@ -1,5 +1,4 @@
-
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 const bcrypt = require("bcrypt");
 const salt = 10;
@@ -10,44 +9,45 @@ const UserModel = require("../models/User");
 const AssoModel = require("../models/Assos");
 const MapEventModel = require("../models/MapEvent");
 
-
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('map');
+router.get("/", function (req, res, next) {
+  res.render("map");
 });
 
-router.get('/testimonials', function(req, res, next) {
-  res.render('testimonials');
+router.get("/map", function (req, res) {
+  res.render("map");
 });
 
-router.get('/events', function(req, res, next) {
-  res.render('events');
+router.get("/testimonials", function (req, res, next) {
+  res.render("testimonials");
 });
 
+router.get("/events", function (req, res, next) {
+  res.render("events");
+});
 
 router.get("/associations", (req, res, next) => {
   console.log(req.body, "this is body");
   console.log(req.params, "this is req params-----");
 
-
- Asso.find({})
-   .then((dbResult) => {
-     res.render("assos.hbs", { assos: dbResult });
-   })
-   .catch((error) => {
-     next(error);
-   });
+  Asso.find({})
+    .then((dbResult) => {
+      res.render("assos.hbs", { assos: dbResult });
+    })
+    .catch((error) => {
+      next(error);
+    });
 });
 
 router.get("/createAsso", (req, res, next) => {
   res.render("create_form_asso");
 });
 
-
-router.post("/createAsso", uploader.single("image"),
+router.post(
+  "/createAsso",
+  uploader.single("image"),
 
   async (req, res, next) => {
-
     const newAsso = req.body;
 
     if (req.file) {
@@ -60,23 +60,20 @@ router.post("/createAsso", uploader.single("image"),
     } catch (error) {
       next(error);
     }
-    
   }
 );
 
 router.get("/gestion-evenements", (req, res, next) => {
-
- MapEventModel.find({}) // --- ^
-   .then((dbResult) => {
-     res.render("map_events_manage", { mapEvents: dbResult });
-   })
-   .catch((error) => {
-     next(error);
-   });
+  MapEventModel.find({}) // --- ^
+    .then((dbResult) => {
+      res.render("map_events_manage", { mapEvents: dbResult });
+    })
+    .catch((error) => {
+      next(error);
+    });
 });
 
 router.get("/dashboard_mapEvents_row/:id/delete", (req, res, next) => {
-
   const mapEventsId = req.params.id;
   MapEventModel.findByIdAndDelete(mapEventsId)
     .then((dbResult) => {
@@ -87,21 +84,20 @@ router.get("/dashboard_mapEvents_row/:id/delete", (req, res, next) => {
     });
 });
 
-
 //////////// AUTH ROUTES
 
 ////// SIGN OUT
 
-router.get('/signup', function(req, res, next) {
-  res.render('choiceSignup');
+router.get("/signup", function (req, res, next) {
+  res.render("choiceSignup");
 });
 
-router.get('/signUpUser', function(req, res, next) {
-  res.render('signUpUser');
+router.get("/signUpUser", function (req, res, next) {
+  res.render("signUpUser");
 });
 
-router.get('/signUpAsso', function(req, res, next) {
-  res.render('signUpAsso');
+router.get("/signUpAsso", function (req, res, next) {
+  res.render("signUpAsso");
 });
 
 router.post("/addUser", async (req, res, next) => {
@@ -117,7 +113,7 @@ router.post("/addUser", async (req, res, next) => {
       const hashedPassword = bcrypt.hashSync(newUser.password, salt);
       newUser.password = hashedPassword;
       const user = await UserModel.create(newUser);
-      
+
       res.redirect("/signInUser");
     }
   } catch (error) {
@@ -138,7 +134,7 @@ router.post("/addAsso", async (req, res, next) => {
       const hashedPassword = bcrypt.hashSync(newUser.password, salt);
       newUser.password = hashedPassword;
       const user = await AssoModel.create(newUser);
-      
+
       res.redirect("/signInAsso");
     }
   } catch (error) {
@@ -148,16 +144,16 @@ router.post("/addAsso", async (req, res, next) => {
 
 /////// SIGN IN
 
-router.get('/signin', function(req, res, next) {
-  res.render('choiceSignin');
+router.get("/signin", function (req, res, next) {
+  res.render("choiceSignin");
 });
 
-router.get('/signInUser', function(req, res, next) {
-  res.render('signInUser');
+router.get("/signInUser", function (req, res, next) {
+  res.render("signInUser");
 });
 
-router.get('/signInAsso', function(req, res, next) {
-  res.render('signInAsso');
+router.get("/signInAsso", function (req, res, next) {
+  res.render("signInAsso");
 });
 
 router.post("/signInUser", async (req, res, next) => {

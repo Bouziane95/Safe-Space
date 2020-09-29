@@ -1,3 +1,13 @@
+const formMapEvent = document.querySelector(".form-card");
+const map = document.getElementById("map");
+const removeFormMapEvent = document.getElementById("return-button");
+
+function removeForm() {
+  formMapEvent.style.display = "none";
+}
+
+removeFormMapEvent.onclick = removeForm;
+
 var options = {
   enableHighAccuracy: true,
   timeout: 5000,
@@ -34,9 +44,12 @@ function success(pos) {
     var latitude = e.lngLat.lat;
     var longitude = e.lngLat.lng;
 
+    formMapEvent.style.display = "flex";
+
     var marker = new mapboxgl.Marker()
       .setLngLat([longitude, latitude])
       .addTo(map);
+    console.log(latitude, longitude);
   });
 }
 
