@@ -1,48 +1,35 @@
-<h1>ASSOS ET ORGA</h1>
+<div id="main-container-associations">
 
-<div><a href="/createAsso">NOUVELLE ASSOCIATION</a></div>
 
-<table>
-    <thead>
-        <tr>
-            <th>name</th>
-            <th>address</th>
-            <th>tel</th>
-            <th>mail</th>
-            <th>description</th>
-            <th>link</th>
-            <th>image</th>
+    <h1>ASSOCIATIONS</h1>
 
-        </tr>
-    </thead>
-    <tbody>
+    {{!-- <div><a href="/createAsso">NOUVELLE ASSOCIATION</a></div> --}}
+
+    <div id="container-all-assos">
         {{#each assos}}
-        <tr>
-            <td>
-                {{this.name}}
-            </td>
-            <td>
-                {{this.address}}
-            </td>
-            <td>
-                {{this.tel}}
-            </td>
-            <td>
-                {{this.mail}}
-            </td>
-            <td>
-                {{this.description}}
-            </td>
-            <td>
-                <a href="{{this.link}}">site web</a>  
-            </td>
-            <td>
-                <img src="{{this.image}}" alt="">
-            </td>
-        </tr>
+            <div id="container-one-asso">
+                
+                <div class="image-associations">
+                    <img src="{{this.image}}" alt="picture">
+                </div>
+                <div>
+                    <p class="infos-asso">
+                        <span>nom: </span> {{this.name}}
+                        <br>
+                        <span>adresse: </span> {{this.address}}
+                        <br>
+                        <span>téléphone: </span> {{this.tel}}
+                        <br>
+                        <span>e-mail: </span>  {{this.email}}
+                        <br>
+                        <span>lien: </span> <a href="{{this.link}}">site web</a>
+                        <br>
+                        <span>description: </span> {{this.description}}
+                    </p>
+                </div>
+            
+            </div> 
         {{/each}}
-
-    </tbody>
-
-</table>
+    </div>
+</div>
 
