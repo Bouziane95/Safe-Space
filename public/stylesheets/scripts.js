@@ -13,7 +13,7 @@ function success(pos) {
   var map = new mapboxgl.Map({
     container: "map",
     style: "mapbox://styles/mapbox/light-v10",
-    zoom: 13,
+    zoom: 11,
     center: [crd.longitude, crd.latitude],
   });
 
@@ -29,6 +29,15 @@ function success(pos) {
   var marker = new mapboxgl.Marker()
     .setLngLat([crd.longitude, crd.latitude])
     .addTo(map);
+
+  map.on("click", function (e) {
+    var latitude = e.lngLat.lat;
+    var longitude = e.lngLat.lng;
+
+    var marker = new mapboxgl.Marker()
+      .setLngLat([longitude, latitude])
+      .addTo(map);
+  });
 }
 
 function error(err) {

@@ -1,0 +1,22 @@
+<h1>Se connecter</h1>
+
+<section id="sign-in">
+  
+  <form method="POST" action="/signInAsso" id="form-user">
+
+    <div>
+      <label for="email" class="email-label">Email</label>
+      <input id="user-email" type="email" placeholder="yo@gmail.com" name="email" required value="yo@gmail.com">
+    </div>
+
+    <div>
+      <label for="password" class="password-label">Password</label>
+      <input id="user-password" type="password" placeholder="••••••" name="password" required value="1234">
+    </div>
+
+    <button class="button-primary white">S'inscrire</button>
+  </form>
+  
+  {{> flash_message}}
+
+</section>
