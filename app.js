@@ -32,17 +32,18 @@ app.set('view engine', 'hbs');
 app.set("views", __dirname + "/views");
 hbs.registerPartials(__dirname + "/views/partials");
 
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(
   session({
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
     secret: process.env.SESSION_SECRET,
-    resave: false,
+    resave: true,
     saveUninitialized: true,
     cookie: {},
   })
@@ -51,7 +52,7 @@ app.use(
 app.use(flash());
 
 app.use(require("./middleware/exposeFlashMessage.js"))
-
+app.use(checkloginStatus);
 
 app.use('/', indexRouter);
 app.use('/signup', authRouter);
@@ -62,11 +63,20 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// BODY PARSER HERE:
-// below mandatory to expose the posted data in req.body (sync)
-app.use(express.urlencoded({ extended: false }));
-// below mandatory to expose the posted data in req.body (async => AJAX)
-app.use(express.json());
+//SESSION
+
+function checkloginStatus(req, res, next) {
+  res.locals.user = req.session.currentUser ? req.session.currentUser : null;
+  // access this value @ {{user}} or {{user.prop}} in .hbs
+  res.locals.isLoggedIn = Boolean(req.session.currentUser);
+  // access this value @ {{isLoggedIn}} in .hbs
+  next(); // continue to the requested route
+} 
+//
+
+
+
+
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -78,11 +88,6 @@ console.log(err)
   res.status(err.status || 500);
   res.render('error');
 });
-
-
-
-// ROUTES
-// INSERT ROUTES HERE
 
 
 

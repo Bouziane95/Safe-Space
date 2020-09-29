@@ -1,13 +1,16 @@
+<h1>Mes informations</h1>
 
-  <h3>Gérer ses événements </h3>
+    {{> informations_association}}
+
+
+
+
   <table>
     <thead>
       <tr>
         <th>Date</th>
         <th>Lieu</th>
-        <th>Coordonnées</th>
         <th>Détails</th>
-        <th>Edit</th>
         <th>Delete</th>
       </tr>
     </thead>
@@ -15,7 +18,7 @@
     <tbody>
       {{#each mapEvents}}
       <tr>
-        {{> dashboard_mapEvents_row}}
+        {{> historique_mapEvents_row}}
       </tr>
       {{/each}}
 
