@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Asso = require("../models/Assos")
+const Asso = require("../models/Assos");
+const MapEvent = require("../models/MapEvent");
 const uploader = require("../config/cloudinary");
 
 /* GET home page. */
@@ -59,6 +60,29 @@ router.post("/createAsso", uploader.single("image"),
     
   }
 );
+
+router.get("/gestion-evenements", (req, res, next) => {
+
+ MapEvent.find({}) // --- ^
+   .then((dbResult) => {
+     res.render("map_events_manage", { mapEvents: dbResult });
+   })
+   .catch((error) => {
+     next(error);
+   });
+});
+
+router.get("/dashboard_mapEvents_row/:id/delete", (req, res, next) => {
+
+  const mapEventsId = req.params.id;
+  MapEvent.findByIdAndDelete(mapEventsId)
+    .then((dbResult) => {
+      res.redirect("/gestion-evenements"); // Redirect to "/labels" after delete is successful
+    })
+    .catch((error) => {
+      next(error); // Sends us to the error handler middleware in app.js if an error occurs
+    });
+});
 
 
 module.exports = router;
