@@ -1,10 +1,21 @@
 <div class="ui six item menu">
 
-  <img class ="item logo-img" src="images/SafeLogo.png" alt="SafeLogo">
+  <img class="item logo-img" src="images/thelogo.png" alt="SafeLogo">
+
   <a class="item" href="/carte">Carte</a>
+
   <a class="item" href="/associations">Associations</a>
+
+  {{#if isLoggedIn}}
   <a class="item" href="/mes-informations">Mes informations</a>
+  {{/if}}
+  {{#unless isLoggedIn}}
   <a class="item" href="/signin">Se connecter</a>
+  {{/unless}}
   <a class="item" href="/signup">S'enregistrer</a>
+
+  {{#if isLoggedIn}}
+  <a href="/logout" class="item"> Logout</a>
+  {{/if}}
 
 </div>

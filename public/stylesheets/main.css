@@ -2,13 +2,40 @@
 @import "./homepage.css";
 @import "./association.css";
 
-
-@import url('https://fonts.googleapis.com/css2?family=Hind+Guntur:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Hind+Guntur:wght@300&display=swap");
 
 * {
-  font-family: 'Hind Guntur', sans-serif;
+  font-family: "Hind Guntur", sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+.flex-choice {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  align-content: stretch;
+}
+
+.flex-choice a {
+  color: inherit;
+  font-weight: bolder;
+}
+
+.flex-choice img {
+  margin-top: 0;
+  max-width: 100px;
+}
+
+.flex-sign {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: center;
+	align-content: stretch;
+}
