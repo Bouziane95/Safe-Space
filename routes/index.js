@@ -30,8 +30,8 @@ router.get("/map", async (req, res, next) => {
   }
 });
 
-router.get('/', function(req, res, next) {
-  res.render('map');
+router.get("/", function (req, res, next) {
+  res.render("map");
 });
 
 router.get("/map", function (req, res) {
@@ -51,21 +51,19 @@ router.get("/associations", (req, res, next) => {
   console.log(req.body, "this is body");
   console.log(req.params, "this is req params-----");
 
- AssoModel.find({})
-   .then((dbResult) => {
-     res.render("assos", { assos: dbResult });
-   })
-   .catch((error) => {
-     next(error);
-   });
+  AssoModel.find({})
+    .then((dbResult) => {
+      res.render("assos", { assos: dbResult });
+    })
+    .catch((error) => {
+      next(error);
+    });
 });
-
 
 /* GET create association page. */
 // router.get("/createAsso", (req, res, next) => {
 //   res.render("create_form_asso");
 // });
-
 
 // router.post("/createAsso", uploader.single("image"),
 
@@ -83,19 +81,19 @@ router.get("/associations", (req, res, next) => {
 //     } catch (error) {
 //       next(error);
 //     }
-    
+
 //   }
 // );
 
 // router.get("/one-product/:id", (req, res, next) => {
-  
+
 //   const sneakerId = req.params.id;
 //   Sneaker.findById(sneakerId)
 //     .then((dbResult) => {
-//       res.render("one_product",  { sneakers: dbResult }); 
+//       res.render("one_product",  { sneakers: dbResult });
 //     })
 //     .catch((error) => {
-//       next(error); 
+//       next(error);
 //     });
 // });
 
@@ -106,18 +104,16 @@ router.get("/associations", (req, res, next) => {
 // });
 
 router.get("/mes-informations", (req, res, next) => {
-
- MapEventModel.find({}) // --- ^
-   .then((dbResult) => {
-     res.render("mes_informations", { mapEvents: dbResult });
-   })
-   .catch((error) => {
-     next(error);
-   });
+  MapEventModel.find({}) // --- ^
+    .then((dbResult) => {
+      res.render("mes_informations", { mapEvents: dbResult });
+    })
+    .catch((error) => {
+      next(error);
+    });
 });
 
 router.get("/historique_mapEvents_row/:id/delete", (req, res, next) => {
-
   const mapEventsId = req.params.id;
   MapEventModel.findByIdAndDelete(mapEventsId)
     .then((dbResult) => {
@@ -128,14 +124,9 @@ router.get("/historique_mapEvents_row/:id/delete", (req, res, next) => {
     });
 });
 
-
 // router.get("/one-product/:id", (req, res) => {
 //   res.render("one_product");
 // });
-
-
-
-
 
 //////////// AUTH ROUTES
 
@@ -256,7 +247,5 @@ router.post("/signInAsso", async (req, res, next) => {
     }
   }
 });
-
-
 
 module.exports = router;
