@@ -6,7 +6,8 @@
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www -e hbs,js,css",
     "seed-users": "nodemon ./bin/users.seed.js",
-    "map.event.seed": "nodemon ./bin/map.event.seeds.js"
+    "map.event.seed": "nodemon ./bin/map.event.seeds.js",
+    "assos.seeds": "nodemon ./bin/assos.seeds.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",

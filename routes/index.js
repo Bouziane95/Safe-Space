@@ -79,10 +79,6 @@ router.get("/associations", (req, res, next) => {
 
 /* GET page mes informations */
 
-// router.get("/mes-informations", (req, res) => {
-//   res.render("mes_informations");
-// });
-
 router.get("/mes-informations", (req, res, next) => {
 
  MapEventModel.find({}) // --- ^
