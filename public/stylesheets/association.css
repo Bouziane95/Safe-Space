@@ -30,10 +30,12 @@ h1 {
 
 #container-all-assos {
     border: 1px solid yellow;
+    display: flex;
+    flex-direction: column;
 }
 
 .infos-asso {
-    margin-left: 20px;
+    margin-left: 40px;
     line-height: 25px;
 }
 
