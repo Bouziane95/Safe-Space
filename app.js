@@ -55,8 +55,8 @@ app.use(require("./middleware/exposeFlashMessage.js"))
 app.use(checkloginStatus);
 
 app.use('/', indexRouter);
-app.use('/signup', authRouter);
-app.use('/users', usersRouter);
+app.use('/', authRouter);
+app.use('/', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
