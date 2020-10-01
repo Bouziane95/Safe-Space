@@ -97,16 +97,6 @@ router.get("/mes-informations", async (req, res, next) => {
   }
 });
 
-// DELETE THE MAPS EVENTS OF ASSOS/USERS
-
-// router.post("mes-informations", async (req, res, next) => {
-//   try {
-//     const deleteEventAsso = await MapEventModel.findByIdAndRemove(req.session.currentUser._id);
-//     res.redirect("mes_informations", {deleteEventAsso})
-//   }
-// }
-// )`
-
 /* EDIT INFORMATIONS ASSOCIATION */
 
 router.get("/infos-edit/:id", async (req, res, next) => {
