@@ -8,9 +8,8 @@ const MapEventSchema = new Schema({
   coordinates: {
     latitude: Number,
     longitude: Number,
-},
+  },
   details: String,
-
 });
 
 const MapEvent = mongoose.model("MapEvent", MapEventSchema);
