@@ -69,6 +69,8 @@ function success(pos) {
       .then((response) => {
         const event = response.data;
         for (let i = 0; i < event.length; i++) {
+          var time = event[i].time;
+          var timeClean = time.replace("T", " ");
           var marker = new mapboxgl.Marker()
             .setLngLat([
               event[i].coordinates.latitude,
@@ -78,7 +80,7 @@ function success(pos) {
               new mapboxgl.Popup({
                 closeOnMove: true,
               }).setHTML(
-                `<center><h4>${event[i].time}</h4></center><p>${event[i].address}</p><p>${event[i].details}</p>`
+                `<center><h4>${timeClean}</h4></center><p>${event[i].address}</p><p>${event[i].details}</p>`
               )
             )
             .addTo(map);

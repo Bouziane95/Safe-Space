@@ -4,6 +4,7 @@
         <form method="POST" action="/map">
             <div class="user-box">
                 <label>Date et Heure</label>
+                {{!-- datetime-local --}}
                 <input id="dateTimeEvent" type="datetime-local" name="time" required="">
             </div>
             <br>
@@ -21,7 +22,6 @@
                 <div id="user-box-hidden">
                     <input id="coordinateLat" type="text" name="coordinates.latitude" required="">
                     <input id="coordinateLong" type="text" name="coordinates.longitude" required="">
-             
                 </div>
             </div>
             <br>

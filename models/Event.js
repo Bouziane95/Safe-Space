@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const EventSchema = new Schema({
   picture: String,
-  time: Date,
+  time: String,
   address: String,
   description: String,
 });
