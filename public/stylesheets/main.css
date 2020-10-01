@@ -1,6 +1,8 @@
 @import "./navBar.css";
 @import "./homepage.css";
 @import "./association.css";
+@import "./mesInformations.css";
+
 
 @import url("https://fonts.googleapis.com/css2?family=Hind+Guntur:wght@300&display=swap");
 
@@ -39,3 +41,5 @@
 	align-items: center;
 	align-content: stretch;
 }
+
+

@@ -4,6 +4,8 @@ const bcrypt = require("bcrypt");
 const salt = 10;
 const uploader = require("../config/cloudinary");
 
+
+
 //MODELS
 
 const UserModel = require("../models/User");
@@ -43,8 +45,8 @@ router.get("/map", async (req, res, next) => {
   }
 });
 
-router.get('/', function(req, res, next) {
-  res.render('map');
+router.get("/", function (req, res, next) {
+  res.render("map");
 });
 
 router.get("/carte", function (req, res) {
@@ -59,18 +61,21 @@ router.get("/events", function (req, res, next) {
   res.render("events");
 });
 
+
+
 /* GET association page. */
+
 router.get("/associations", (req, res, next) => {
   console.log(req.body, "this is body");
   console.log(req.params, "this is req params-----");
 
- AssoModel.find({})
-   .then((dbResult) => {
-     res.render("assos", { assos: dbResult });
-   })
-   .catch((error) => {
-     next(error);
-   });
+  AssoModel.find({})
+    .then((dbResult) => {
+      res.render("assos", { assos: dbResult });
+    })
+    .catch((error) => {
+      next(error);
+    });
 });
 
 
@@ -100,20 +105,48 @@ router.get("/mes-informations", async (req, res, next) => {
 // }
 // )`
 
-///TEST
+/* EDIT INFORMATIONS ASSOCIATION */
 
-// AssoModel.findById(req.session.currentUser._id).then({})
-//  MapEventModel.find({}) // --- ^
-//    .then((dbResult) => {
-//      res.render("mes_informations", { mapEvents: dbResult });
-//    })
-//    .catch((error) => {
-//      next(error);
-//    });
-// });
+router.get("/infos-edit/:id", async (req, res, next) => {
+  try {
+      const infoId = req.params.id;
+      const dbResult = await AssoModel.findById(infoId);
+    res.render("infos_edit", { infos: dbResult });
+  } catch (error) {
+    next(error); // Sends us to the error handler middleware in app.js if an error occurs
+  }
+});
+
+
+router.post("/infos-edit/:id", uploader.single("image"),
+ async (req, res, next) => {
+    console.log(req.file, "you are here ------------")
+    console.log(req.body, "before ------------")
+
+    
+    if (req.file) {
+      req.body.image = req.file.path;
+    }
+    console.log(req.body, "after ------------")
+
+  try {
+    const infoId = req.params.id;
+    const infoAsso = req.body;
+    // console.log("info ID --------------",infoAsso.password);
+    const hashedPassword = bcrypt.hashSync(infoAsso.password, salt);
+    infoAsso.password = hashedPassword;
+    const updatedInfo = await AssoModel.findByIdAndUpdate(infoId, req.body);
+    res.redirect("/mes-informations");
+  } catch (error) {
+    next(error); // Sends us to the error handler middleware in app.js if an error occurs
+  }
+});
+
+
+
+/* DELETE MAP-EVENTS DANS L' HISTORIQUE */
 
 router.get("/historique_mapEvents_row/:id/delete", (req, res, next) => {
-
   const mapEventsId = req.params.id;
   MapEventModel.findByIdAndDelete(mapEventsId)
     .then((dbResult) => {
@@ -123,7 +156,6 @@ router.get("/historique_mapEvents_row/:id/delete", (req, res, next) => {
       next(error); // Sends us to the error handler middleware in app.js if an error occurs
     });
 });
-
 
 //////////// AUTH ROUTES
 
@@ -162,7 +194,17 @@ router.post("/addUser", async (req, res, next) => {
   }
 });
 
-router.post("/addAsso", async (req, res, next) => {
+
+router.post("/addAsso", uploader.single("image"),
+  async (req, res, next) => {
+    console.log(req.file, "you are here ------------")
+    console.log(req.body, "before ------------")
+
+    if (req.file) {
+      req.body.image = req.file.path;
+    }
+    console.log(req.body, "after ------------")
+
   try {
     const newUser = req.body;
     const foundUser = await AssoModel.findOne({ email: newUser.email });
@@ -182,6 +224,7 @@ router.post("/addAsso", async (req, res, next) => {
     next(error);
   }
 });
+
 
 /////// SIGN IN
 
@@ -241,7 +284,7 @@ router.post("/signInAsso", async (req, res, next) => {
       const userObject = foundUser.toObject();
       delete userObject.password;
       req.session.currentUser = userObject;
-      req.session.userType = "asso"
+      req.session.userType = "asso";
       // req.flash("success", "Successfully logged in...");
       res.redirect("/");
     }
@@ -256,7 +299,5 @@ router.get("/logout", (req, res, next) => {
     res.redirect("/");
   });
 });
-
-
 
 module.exports = router;
