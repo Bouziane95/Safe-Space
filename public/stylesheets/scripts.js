@@ -70,7 +70,7 @@ function success(pos) {
         const event = response.data;
         for (let i = 0; i < event.length; i++) {
           var time = event[i].time;
-          var timeClean = time.replace("T", " ");
+          var timeClean = dayjs(time).format("HH:mm DD/MM/YYYY");
           var marker = new mapboxgl.Marker()
             .setLngLat([
               event[i].coordinates.latitude,

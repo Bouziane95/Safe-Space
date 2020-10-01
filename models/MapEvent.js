@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const MapEventSchema = new Schema({
-  time: String,
+  time: Date,
   address: String,
   coordinates: {
     latitude: Number,

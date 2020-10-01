@@ -4,8 +4,6 @@ const bcrypt = require("bcrypt");
 const salt = 10;
 const uploader = require("../config/cloudinary");
 
-
-
 //MODELS
 
 const UserModel = require("../models/User");
@@ -17,19 +15,22 @@ const MapEvent = require("../models/MapEvent");
 
 router.post("/map", async (req, res, next) => {
   try {
-
     const newEvent = req.body;
 
     const createdEvent = await MapEvent.create(newEvent);
 
     if (req.session.userType === "asso") {
-      const infosAsso = await AssoModel.findByIdAndUpdate(req.session.currentUser._id,{$push: {events:createdEvent._id }});
-    } else if 
-      (req.session.userType ==="user") {
-        const infosUser = await UserModel.findByIdAndUpdate(req.session.currentUser._id,{$push: {events:createdEvent._id }});
-      } 
+      const infosAsso = await AssoModel.findByIdAndUpdate(
+        req.session.currentUser._id,
+        { $push: { events: createdEvent._id } }
+      );
+    } else if (req.session.userType === "user") {
+      const infosUser = await UserModel.findByIdAndUpdate(
+        req.session.currentUser._id,
+        { $push: { events: createdEvent._id } }
+      );
+    }
     res.redirect("/");
-    
   } catch (error) {
     next(error);
   }
@@ -61,8 +62,6 @@ router.get("/events", function (req, res, next) {
   res.render("events");
 });
 
-
-
 /* GET association page. */
 
 router.get("/associations", (req, res, next) => {
@@ -78,21 +77,24 @@ router.get("/associations", (req, res, next) => {
     });
 });
 
-
 /// GET THE INFOS OF THE ASSO/USERS AND THEIR RESPECTIVE MAP EVENTS
 
 router.get("/mes-informations", async (req, res, next) => {
   try {
-  if (req.session.userType === "asso") {
-  const infos = await AssoModel.findById(req.session.currentUser._id).populate("events");
-  res.render("mes_informations", { infos });
-} else {
-  const infos = await UserModel.findById(req.session.currentUser._id).populate("events");
-  res.render("mes_informationsUser", { infos });
-}
-} catch (error) {
-  next(error);
-}
+    if (req.session.userType === "asso") {
+      const infos = await AssoModel.findById(
+        req.session.currentUser._id
+      ).populate("events");
+      res.render("mes_informations", { infos });
+    } else {
+      const infos = await UserModel.findById(
+        req.session.currentUser._id
+      ).populate("events");
+      res.render("mes_informationsUser", { infos });
+    }
+  } catch (error) {
+    next(error);
+  }
 });
 
 // DELETE THE MAPS EVENTS OF ASSOS/USERS
@@ -109,40 +111,39 @@ router.get("/mes-informations", async (req, res, next) => {
 
 router.get("/infos-edit/:id", async (req, res, next) => {
   try {
-      const infoId = req.params.id;
-      const dbResult = await AssoModel.findById(infoId);
+    const infoId = req.params.id;
+    const dbResult = await AssoModel.findById(infoId);
     res.render("infos_edit", { infos: dbResult });
   } catch (error) {
     next(error); // Sends us to the error handler middleware in app.js if an error occurs
   }
 });
 
+router.post(
+  "/infos-edit/:id",
+  uploader.single("image"),
+  async (req, res, next) => {
+    console.log(req.file, "you are here ------------");
+    console.log(req.body, "before ------------");
 
-router.post("/infos-edit/:id", uploader.single("image"),
- async (req, res, next) => {
-    console.log(req.file, "you are here ------------")
-    console.log(req.body, "before ------------")
-
-    
     if (req.file) {
       req.body.image = req.file.path;
     }
-    console.log(req.body, "after ------------")
+    console.log(req.body, "after ------------");
 
-  try {
-    const infoId = req.params.id;
-    const infoAsso = req.body;
-    // console.log("info ID --------------",infoAsso.password);
-    const hashedPassword = bcrypt.hashSync(infoAsso.password, salt);
-    infoAsso.password = hashedPassword;
-    const updatedInfo = await AssoModel.findByIdAndUpdate(infoId, req.body);
-    res.redirect("/mes-informations");
-  } catch (error) {
-    next(error); // Sends us to the error handler middleware in app.js if an error occurs
+    try {
+      const infoId = req.params.id;
+      const infoAsso = req.body;
+      // console.log("info ID --------------",infoAsso.password);
+      const hashedPassword = bcrypt.hashSync(infoAsso.password, salt);
+      infoAsso.password = hashedPassword;
+      const updatedInfo = await AssoModel.findByIdAndUpdate(infoId, req.body);
+      res.redirect("/mes-informations");
+    } catch (error) {
+      next(error); // Sends us to the error handler middleware in app.js if an error occurs
+    }
   }
-});
-
-
+);
 
 /* DELETE MAP-EVENTS DANS L' HISTORIQUE */
 
@@ -194,16 +195,14 @@ router.post("/addUser", async (req, res, next) => {
   }
 });
 
+router.post("/addAsso", uploader.single("image"), async (req, res, next) => {
+  console.log(req.file, "you are here ------------");
+  console.log(req.body, "before ------------");
 
-router.post("/addAsso", uploader.single("image"),
-  async (req, res, next) => {
-    console.log(req.file, "you are here ------------")
-    console.log(req.body, "before ------------")
-
-    if (req.file) {
-      req.body.image = req.file.path;
-    }
-    console.log(req.body, "after ------------")
+  if (req.file) {
+    req.body.image = req.file.path;
+  }
+  console.log(req.body, "after ------------");
 
   try {
     const newUser = req.body;
@@ -225,7 +224,6 @@ router.post("/addAsso", uploader.single("image"),
   }
 });
 
-
 /////// SIGN IN
 
 router.get("/signin", function (req, res, next) {
@@ -242,7 +240,7 @@ router.get("/signInAsso", function (req, res, next) {
 
 router.post("/signInUser", async (req, res, next) => {
   const { email, password } = req.body;
- 
+
   const foundUser = await UserModel.findOne({ email: email });
   console.log(foundUser);
   if (!foundUser) {
@@ -259,7 +257,7 @@ router.post("/signInUser", async (req, res, next) => {
       const userObject = foundUser.toObject();
       delete userObject.password;
       req.session.currentUser = userObject;
-      req.session.userType = "user"
+      req.session.userType = "user";
       // req.flash("success", "Successfully logged in...");
       res.redirect("/");
     }
