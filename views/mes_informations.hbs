@@ -2,9 +2,6 @@
 
     {{> informations_association}}
 
-
-
-
   <table>
     <thead>
       <tr>
@@ -16,16 +13,13 @@
     </thead>
 
     <tbody>
-      {{#each mapEvents}}
+      {{#each infos.events}}
       <tr>
         {{> historique_mapEvents_row}}
       </tr>
       {{/each}}
 
-
-
-
-      {{#unless mapEvents}}
+      {{#unless infos.events}}
       <tr>
         <td colspan="6">Pas d'événements enregistrés</td>
       </tr>

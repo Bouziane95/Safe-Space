@@ -11,6 +11,7 @@ const AssosSchema = new Schema({
   link: String,
   password: String,
   image: String,
+  events: [{type:Schema.Types.ObjectId, ref:"MapEvent"}]
 });
 
 const Asso = mongoose.model("Asso", AssosSchema);

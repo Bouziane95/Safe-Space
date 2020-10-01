@@ -10,6 +10,7 @@ const MapEventSchema = new Schema({
     longitude: Number,
 },
   details: String,
+
 });
 
 const MapEvent = mongoose.model("MapEvent", MapEventSchema);

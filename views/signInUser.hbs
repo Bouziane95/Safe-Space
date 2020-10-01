@@ -22,20 +22,20 @@
 </section> --}}
 
 
-<form action="POST" action="/signInUser">
+<form method="POST" action="/signInUser">
   <div class="ui form flex-sign">
 
     <div class="field">
 
       <label for="email" class="email-label">Email</label>
-      <input type="email" placeholder="monmail@mail.com" name="email">
+      <input type="email" placeholder="monmail@mail.com" name="email" required value="yo@gmail.com">
 
     </div>
 
     <div class="field">
 
-      <label>Mot de passe</label>
-      <input type="password" placeholder="••••••" name="password">
+      <label for="password" class="password-label">Mot de passe</label>
+      <input type="password" placeholder="••••••" name="password" required value="1234">
 
     </div>
      <button class="ui secondary button">

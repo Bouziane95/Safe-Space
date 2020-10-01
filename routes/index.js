@@ -11,12 +11,23 @@ const AssoModel = require("../models/Assos");
 const MapEventModel = require("../models/MapEvent");
 const MapEvent = require("../models/MapEvent");
 
+///ROUTES
+
 router.post("/map", async (req, res, next) => {
   try {
+
     const newEvent = req.body;
+
     const createdEvent = await MapEvent.create(newEvent);
-    //Mettre createdEvent dans le redirect pour crée ensuite un object avec les coordonnes et le donner au front
+
+    if (req.session.userType === "asso") {
+      const infosAsso = await AssoModel.findByIdAndUpdate(req.session.currentUser._id,{$push: {events:createdEvent._id }});
+    } else if 
+      (req.session.userType ==="user") {
+        const infosUser = await UserModel.findByIdAndUpdate(req.session.currentUser._id,{$push: {events:createdEvent._id }});
+      } 
     res.redirect("/");
+    
   } catch (error) {
     next(error);
   }
@@ -36,7 +47,7 @@ router.get('/', function(req, res, next) {
   res.render('map');
 });
 
-router.get("/map", function (req, res) {
+router.get("/carte", function (req, res) {
   res.render("map");
 });
 
@@ -62,21 +73,35 @@ router.get("/associations", (req, res, next) => {
    });
 });
 
+
+/// GET THE INFOS OF THE ASSO/USERS AND THEIR RESPECTIVE MAP EVENTS
+
 router.get("/mes-informations", async (req, res, next) => {
   try {
-    console.log(req.session.userType)
   if (req.session.userType === "asso") {
-  console.log(req.session.currentUser._id)
-  const infos = await AssoModel.findById(req.session.currentUser._id);
+  const infos = await AssoModel.findById(req.session.currentUser._id).populate("events");
   res.render("mes_informations", { infos });
 } else {
-  res.render("mes_informations")
+  const infos = await UserModel.findById(req.session.currentUser._id).populate("events");
+  res.render("mes_informationsUser", { infos });
 }
 } catch (error) {
   next(error);
 }
 });
-  
+
+// DELETE THE MAPS EVENTS OF ASSOS/USERS
+
+// router.post("mes-informations", async (req, res, next) => {
+//   try {
+//     const deleteEventAsso = await MapEventModel.findByIdAndRemove(req.session.currentUser._id);
+//     res.redirect("mes_informations", {deleteEventAsso})
+//   }
+// }
+// )`
+
+///TEST
+
 // AssoModel.findById(req.session.currentUser._id).then({})
 //  MapEventModel.find({}) // --- ^
 //    .then((dbResult) => {
@@ -99,10 +124,6 @@ router.get("/historique_mapEvents_row/:id/delete", (req, res, next) => {
     });
 });
 
-
-// router.get("/one-product/:id", (req, res) => {
-//   res.render("one_product");
-// });
 
 //////////// AUTH ROUTES
 
@@ -178,15 +199,16 @@ router.get("/signInAsso", function (req, res, next) {
 
 router.post("/signInUser", async (req, res, next) => {
   const { email, password } = req.body;
+ 
   const foundUser = await UserModel.findOne({ email: email });
   console.log(foundUser);
   if (!foundUser) {
-    req.flash("error", "Invalid credentials");
+    // req.flash("error", "Invalid credentials");
     res.redirect("/signInUser");
   } else {
     const isSamePassword = bcrypt.compareSync(password, foundUser.password);
     if (!isSamePassword) {
-      req.flash("error", "Invalid Credentials");
+      // req.flash("error", "Invalid Credentials");
       res.redirect("/signInUser");
     } else {
       const userDocument = { ...foundUser };
@@ -195,7 +217,7 @@ router.post("/signInUser", async (req, res, next) => {
       delete userObject.password;
       req.session.currentUser = userObject;
       req.session.userType = "user"
-      req.flash("success", "Successfully logged in...");
+      // req.flash("success", "Successfully logged in...");
       res.redirect("/");
     }
   }
