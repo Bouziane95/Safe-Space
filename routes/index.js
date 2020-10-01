@@ -65,8 +65,6 @@ router.get("/events", function (req, res, next) {
 /* GET association page. */
 
 router.get("/associations", (req, res, next) => {
-  console.log(req.body, "this is body");
-  console.log(req.params, "this is req params-----");
 
   AssoModel.find({})
     .then((dbResult) => {
@@ -97,15 +95,6 @@ router.get("/mes-informations", async (req, res, next) => {
   }
 });
 
-// DELETE THE MAPS EVENTS OF ASSOS/USERS
-
-// router.post("mes-informations", async (req, res, next) => {
-//   try {
-//     const deleteEventAsso = await MapEventModel.findByIdAndRemove(req.session.currentUser._id);
-//     res.redirect("mes_informations", {deleteEventAsso})
-//   }
-// }
-// )`
 
 /* EDIT INFORMATIONS ASSOCIATION */
 
@@ -119,28 +108,22 @@ router.get("/infos-edit/:id", async (req, res, next) => {
   }
 });
 
-router.post(
-  "/infos-edit/:id",
-  uploader.single("image"),
+router.post("/infos-edit/:id", uploader.single("image"),
   async (req, res, next) => {
-    console.log(req.file, "you are here ------------");
-    console.log(req.body, "before ------------");
 
     if (req.file) {
       req.body.image = req.file.path;
     }
-    console.log(req.body, "after ------------");
 
     try {
       const infoId = req.params.id;
       const infoAsso = req.body;
-      // console.log("info ID --------------",infoAsso.password);
       const hashedPassword = bcrypt.hashSync(infoAsso.password, salt);
       infoAsso.password = hashedPassword;
       const updatedInfo = await AssoModel.findByIdAndUpdate(infoId, req.body);
       res.redirect("/mes-informations");
     } catch (error) {
-      next(error); // Sends us to the error handler middleware in app.js if an error occurs
+      next(error); 
     }
   }
 );
@@ -196,13 +179,10 @@ router.post("/addUser", async (req, res, next) => {
 });
 
 router.post("/addAsso", uploader.single("image"), async (req, res, next) => {
-  console.log(req.file, "you are here ------------");
-  console.log(req.body, "before ------------");
 
   if (req.file) {
     req.body.image = req.file.path;
   }
-  console.log(req.body, "after ------------");
 
   try {
     const newUser = req.body;
