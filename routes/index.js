@@ -4,6 +4,8 @@ const bcrypt = require("bcrypt");
 const salt = 10;
 const uploader = require("../config/cloudinary");
 
+
+
 //MODELS
 
 const UserModel = require("../models/User");
@@ -48,7 +50,10 @@ router.get("/events", function (req, res, next) {
   res.render("events");
 });
 
+
+
 /* GET association page. */
+
 router.get("/associations", (req, res, next) => {
   console.log(req.body, "this is body");
   console.log(req.params, "this is req params-----");
@@ -61,6 +66,10 @@ router.get("/associations", (req, res, next) => {
      next(error);
    });
 });
+
+
+
+/* GET mes informations (asso) page. */
 
 router.get("/mes-informations", async (req, res, next) => {
   try {
@@ -76,19 +85,6 @@ router.get("/mes-informations", async (req, res, next) => {
   next(error);
 }
 });
-  
-
-router.get("/mes-informations", (req, res, next) => {
-
- MapEventModel.find({}) // --- ^
-   .then((dbResult) => {
-     res.render("mes_informations", { mapEvents: dbResult });
-   })
-   .catch((error) => {
-     next(error);
-   });
-});
-
 
 // AssoModel.findById(req.session.currentUser._id).then({})
 //  MapEventModel.find({}) // --- ^
@@ -99,6 +95,49 @@ router.get("/mes-informations", (req, res, next) => {
 //      next(error);
 //    });
 // });
+
+
+
+/* EDIT INFORMATIONS ASSOCIATION */
+
+router.get("/infos-edit/:id", async (req, res, next) => {
+  try {
+      const infoId = req.params.id;
+      const dbResult = await AssoModel.findById(infoId);
+    res.render("infos_edit", { infos: dbResult });
+  } catch (error) {
+    next(error); // Sends us to the error handler middleware in app.js if an error occurs
+  }
+});
+
+
+router.post("/infos-edit/:id", uploader.single("image"),
+ async (req, res, next) => {
+    console.log(req.file, "you are here ------------")
+    console.log(req.body, "before ------------")
+
+    
+    if (req.file) {
+      req.body.image = req.file.path;
+    }
+    console.log(req.body, "after ------------")
+
+  try {
+    const infoId = req.params.id;
+    const infoAsso = req.body;
+    // console.log("info ID --------------",infoAsso.password);
+    const hashedPassword = bcrypt.hashSync(infoAsso.password, salt);
+    infoAsso.password = hashedPassword;
+    const updatedInfo = await AssoModel.findByIdAndUpdate(infoId, req.body);
+    res.redirect("/mes-informations");
+  } catch (error) {
+    next(error); // Sends us to the error handler middleware in app.js if an error occurs
+  }
+});
+
+
+
+/* DELETE MAP-EVENTS DANS L' HISTORIQUE */
 
 router.get("/historique_mapEvents_row/:id/delete", (req, res, next) => {
 
@@ -113,9 +152,7 @@ router.get("/historique_mapEvents_row/:id/delete", (req, res, next) => {
 });
 
 
-// router.get("/one-product/:id", (req, res) => {
-//   res.render("one_product");
-// });
+
 
 //////////// AUTH ROUTES
 
@@ -154,7 +191,17 @@ router.post("/addUser", async (req, res, next) => {
   }
 });
 
-router.post("/addAsso", async (req, res, next) => {
+
+router.post("/addAsso", uploader.single("image"),
+  async (req, res, next) => {
+    console.log(req.file, "you are here ------------")
+    console.log(req.body, "before ------------")
+
+    if (req.file) {
+      req.body.image = req.file.path;
+    }
+    console.log(req.body, "after ------------")
+
   try {
     const newUser = req.body;
     const foundUser = await AssoModel.findOne({ email: newUser.email });
@@ -174,6 +221,7 @@ router.post("/addAsso", async (req, res, next) => {
     next(error);
   }
 });
+
 
 /////// SIGN IN
 

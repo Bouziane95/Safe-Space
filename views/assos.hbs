@@ -1,35 +1,32 @@
 <div id="main-container-associations">
 
 
-    <h1>ASSOCIATIONS</h1>
+    <h1>Associations</h1>
 
-    {{!-- <div><a href="/createAsso">NOUVELLE ASSOCIATION</a></div> --}}
+   
 
     <div id="container-all-assos">
         {{#each assos}}
             <div id="container-one-asso">
                 
                 <div class="image-associations">
-                    <img src="{{this.image}}" alt="picture">
+                    <img src="{{this.image}}" alt="picture" height="150px">
                 </div>
-                <div>
-                    <p class="infos-asso">
-                        <span>nom: </span> {{this.name}}
-                        <br>
-                        <span>adresse: </span> {{this.address}}
-                        <br>
-                        <span>téléphone: </span> {{this.tel}}
-                        <br>
-                        <span>e-mail: </span>  {{this.email}}
-                        <br>
-                        <span>lien: </span> <a href="{{this.link}}">site web</a>
-                        <br>
-                        <span>description: </span> {{this.description}}
-                    </p>
+                <div id="info-container">
+                    <span id="name-info">{{this.name}}</span> 
+                    <br><br>
+                    <span>adresse: </span> {{this.address}}
+                    <br>
+                    <span>tél. </span> {{this.tel}}
+                    <br>
+                    <span>e-mail: </span>  {{this.email}}
+                    <br>
+                    <span>lien: </span> <a href="{{this.link}}" class="link">{{this.link}}</a>
+                    <br>
+                    {{this.description}}
                 </div>
             
             </div> 
         {{/each}}
     </div>
 </div>
-

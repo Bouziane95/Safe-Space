@@ -1,24 +1,32 @@
-<h2>informations association</h2>
-
-          <div>
+{{!-- <h2>informations association</h2> --}}
+<div id="global-contain-infos-assos">
+        <div id="main-container-infos-assos">
                 
-                <div>
-                    <img src="{{infos.image}}" alt="picture">
+                <div class="contain-img">
+                    <img src="{{infos.image}}" alt="picture" height="150px">
                 </div>
-                <div>
-                    <p>
-                        <span>nom: </span> {{infos.name}}
+                <div id="container-text-infos-assos">
+                    <div>
+                        <span id="name-info">{{infos.name}}</span> 
+                        <br><br>
+                        <span>Adresse: </span> {{infos.address}}
                         <br>
-                        <span>adresse: </span> {{infos.address}}
+                        <span>Téléphone: </span> {{infos.tel}}
                         <br>
-                        <span>téléphone: </span> {{infos.tel}}
+                        <span>E-mail: </span>  {{infos.email}}
                         <br>
-                        <span>e-mail: </span>  {{infos.email}}
+                        <span>Lien: </span> <a href="{{infos.link}}" class="link">{{infos.link}}</a>
                         <br>
-                        <span>lien: </span> <a href="{{assos.link}}">site web</a>
-                        <br>
-                        <span>description: </span> {{infos.description}}
-                    </p>
+                        <span>Description: </span> {{infos.description}}
+                    </div>
+                    <div id="btn-edit-info">
+                        <button class="ui secondary button" id="blabla">
+                            <a href="/infos-edit/{{infos._id}}">Editer</a>                   
+                        </button>
+                    </div>
                 </div>
-            
-            </div> 
+
+        </div> 
+
+
+</div>
