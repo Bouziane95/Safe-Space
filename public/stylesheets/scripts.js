@@ -15,16 +15,12 @@ removeFormMapEvent.onclick = removeForm;
 
 var options = {
   enableHighAccuracy: true,
-  timeout: 5000,
+  timeout: 8000,
   maximumAge: 0,
 };
 
-function success(pos) {
+function loadMapGeoUser(pos) {
   var crd = pos.coords;
-
-  mapboxgl.accessToken =
-    "pk.eyJ1IjoiYm91Ym91OTUiLCJhIjoiY2tmbWRmdTduMDYxZjM1bWU5ejU3OHU2cyJ9.qVQnw89kJEBWHTsbyV2sBQ";
-
   var map = new mapboxgl.Map({
     container: "map",
     style: "mapbox://styles/mapbox/light-v10",
@@ -32,36 +28,16 @@ function success(pos) {
     center: [crd.longitude, crd.latitude],
   });
 
-  // map.on("load", function () {
-  //   map.loadImage("/images/Frank.png", function (error, image) {
-  //     if (error) throw error;
-  //     map.addImage("frank-icon", image);
-  //     map.addSource("point", {
-  //       type: "geojson",
-  //       data: {
-  //         type: "FeatureCollection",
-  //         features: [
-  //           {
-  //             type: "Feature",
-  //             geometry: {
-  //               type: "Point",
-  //               coordinates: [crd.longitude, crd.latitude],
-  //             },
-  //           },
-  //         ],
-  //       },
-  //     });
-  //     map.addLayer({
-  //       id: "points",
-  //       type: "symbol",
-  //       source: "point",
-  //       layout: {
-  //         "icon-image": "frank-icon",
-  //         "icon-size": 0.25,
-  //       },
-  //     });
-  //   });
-  // });
+  var popuup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+    `<center><h4>${"Mercredi 23 Septembre"}</h4></center><p>${"IronHack"}</p><p>${"Aggression AJAX"}</p>`
+  );
+  var elFrank = document.createElement("div");
+  elFrank.id = "marker-frank";
+
+  new mapboxgl.Marker(elFrank)
+    .setLngLat([2.3884192, 48.8526736])
+    .setPopup(popuup)
+    .addTo(map);
 
   map.on("load", () => {
     safeSpaceAPI
@@ -71,7 +47,9 @@ function success(pos) {
         for (let i = 0; i < event.length; i++) {
           var time = event[i].time;
           var timeClean = dayjs(time).format("HH:mm DD/MM/YYYY");
-          var marker = new mapboxgl.Marker()
+          var el = document.createElement("div");
+          el.id = "marker";
+          new mapboxgl.Marker(el)
             .setLngLat([
               event[i].coordinates.latitude,
               event[i].coordinates.longitude,
@@ -113,11 +91,13 @@ function success(pos) {
       .createAdress({ lat: latitude, lng: longitude })
       .then((response) => {
         const adress = response.data;
+        var el = document.createElement("div");
+        el.id = "marker";
         console.log(adress);
         document.getElementById("coordinateLat").value = adress.query[0];
         document.getElementById("coordinateLong").value = adress.query[1];
         document.getElementById("adress").value = adress.features[0].place_name;
-        var marker = new mapboxgl.Marker()
+        new mapboxgl.Marker(el)
           .setLngLat([longitude, latitude])
           .setPopup(
             new mapboxgl.Popup({
@@ -136,74 +116,86 @@ function success(pos) {
   });
 }
 
-function error(err) {
-  console.warn(`ERROR(${err.code}): ${err.message}`);
-  if (err.code == 1) {
-    mapboxgl.accessToken =
-      "pk.eyJ1IjoiYm91Ym91OTUiLCJhIjoiY2tmbWRmdTduMDYxZjM1bWU5ejU3OHU2cyJ9.qVQnw89kJEBWHTsbyV2sBQ";
+function loadMap() {
+  mapboxgl.accessToken =
+    "pk.eyJ1IjoiYm91Ym91OTUiLCJhIjoiY2tmbWRmdTduMDYxZjM1bWU5ejU3OHU2cyJ9.qVQnw89kJEBWHTsbyV2sBQ";
 
-    var map = new mapboxgl.Map({
-      container: "map",
-      style: "mapbox://styles/mapbox/light-v10",
-      zoom: 11,
-      center: [78.3430302, 17.449968],
-    });
+  var map = new mapboxgl.Map({
+    container: "map",
+    style: "mapbox://styles/mapbox/light-v10",
+    zoom: 11,
+    center: [2.3488, 48.8534],
+  });
 
-    map.on("load", () => {
-      safeSpaceAPI
-        .get("/map")
-        .then((response) => {
-          const event = response.data;
-          for (let i = 0; i < event.length; i++) {
-            var marker = new mapboxgl.Marker()
-              .setLngLat([
-                event[i].coordinates.latitude,
-                event[i].coordinates.longitude,
-              ])
-              .setPopup(
-                new mapboxgl.Popup({
-                  closeOnMove: true,
-                }).setHTML(
-                  `<center><h4>${event[i].time}</h4></center><p>${event[i].address}</p><p>${event[i].details}</p>`
-                )
-              )
-              .addTo(map);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    });
+  loadFrankHead();
 
-    map.on("dblclick", function (e) {
-      var latitude = e.lngLat.lat;
-      var longitude = e.lngLat.lng;
-      adressAPI
-        .createAdress({ lat: latitude, lng: longitude })
-        .then((response) => {
-          const adress = response.data;
-          console.log(adress);
-          document.getElementById("coordinateLat").value = adress.query[0];
-          document.getElementById("coordinateLong").value = adress.query[1];
-          document.getElementById("adress").value =
-            adress.features[0].place_name;
-          var marker = new mapboxgl.Marker()
-            .setLngLat([longitude, latitude])
+  map.on("load", () => {
+    safeSpaceAPI
+      .get("/map")
+      .then((response) => {
+        const event = response.data;
+
+        for (let i = 0; i < event.length; i++) {
+          new mapboxgl.Marker(el)
+            .setLngLat([
+              event[i].coordinates.latitude,
+              event[i].coordinates.longitude,
+            ])
             .setPopup(
               new mapboxgl.Popup({
                 closeOnMove: true,
               }).setHTML(
-                `<center><h4>N'oubliez pas de renseigner la date et l'heure</h4></center><p>${adress.features[0].place_name}</p><p>Sans oublier les détails</p>`
+                `<center><h4>${event[i].time}</h4></center><p>${event[i].address}</p><p>${event[i].details}</p>`
               )
             )
             .addTo(map);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
 
-      formMapEvent.style.display = "flex";
-    });
+  map.on("dblclick", function (e) {
+    var latitude = e.lngLat.lat;
+    var longitude = e.lngLat.lng;
+    adressAPI
+      .createAdress({ lat: latitude, lng: longitude })
+      .then((response) => {
+        const adress = response.data;
+        console.log(adress);
+        document.getElementById("coordinateLat").value = adress.query[0];
+        document.getElementById("coordinateLong").value = adress.query[1];
+        document.getElementById("adress").value = adress.features[0].place_name;
+        new mapboxgl.Marker(el)
+          .setLngLat([longitude, latitude])
+          .setPopup(
+            new mapboxgl.Popup({
+              closeOnMove: true,
+            }).setHTML(
+              `<center><h4>N'oubliez pas de renseigner la date et l'heure</h4></center><p>${adress.features[0].place_name}</p><p>Sans oublier les détails</p>`
+            )
+          )
+          .addTo(map);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    formMapEvent.style.display = "flex";
+  });
+}
+
+function success(pos) {
+  mapboxgl.accessToken =
+    "pk.eyJ1IjoiYm91Ym91OTUiLCJhIjoiY2tmbWRmdTduMDYxZjM1bWU5ejU3OHU2cyJ9.qVQnw89kJEBWHTsbyV2sBQ";
+  loadMapGeoUser(pos);
+}
+
+function error(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+  if (err.code == 1) {
+    loadMap();
   }
 }
 
