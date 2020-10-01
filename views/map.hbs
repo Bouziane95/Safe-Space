@@ -1,5 +1,5 @@
-<div id="map-form">
-    <div id='map' style='width: 1100px; height: 500px;'></div>
+{{!-- <div id="map-form">
+    <div id='map'></div>
     <div class="form-card">
         <form method="POST" action="/map">
             <div class="user-box">
@@ -33,4 +33,41 @@
         <button id="return-button">Retour</button>
 
     </div>
+</div> --}}
+
+<div id="map-form">
+    <div id='map'></div>
+    <div class="form-card">
+        <div id="form-map-events">
+            <form class="ui form" method="POST" action="/map">
+                <div class="field user-box" id="date-et-heure">
+                        <label>Date et Heure</label>
+                        <input id="dateTimeEvent" type="datetime-local" name="time" required="">
+                </div>
+                <div class="field user-box">
+                        <label>Adresse</label>
+                        <input id="adress" type="text" name="address" required="" placeholder="Mon adresse">
+                </div>
+                <div class="field user-box">
+                        <label>Détails</label>
+                        <textarea id="detailsEvent" type="text" name="details" required="" placeholder="Détails de l'événement">
+                        </textarea>
+                </div>
+                <div class="field user-box">
+                    <div id="user-box-hidden">
+                        <label>Adresse</label>
+                        <input id="coordinateLat" type="text" name="coordinates.latitude" required="">
+                        <input id="coordinateLong" type="text" name="coordinates.longitude" required="">
+                    </div>
+                </div>
+                <a href="#">
+                    <button class="ui secondary button button-submit" type="submit" value="Validate">Valider</button>
+                </a>
+            </form>
+            <div id="wrap-return-btn">
+                <button class="ui secondary button" id="return-button">Retour</button>
+            </div>
+        </div>
+    </div>
 </div>
+

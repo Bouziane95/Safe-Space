@@ -1,0 +1,17 @@
+/* #map {
+    width: 100%;
+    height: 500px;
+}
+
+#map-form {
+    display: flex;
+}
+
+
+
+@media screen and (max-width: 800px)
+{
+    #map-form {
+        flex-direction: column;
+    }
+} */
