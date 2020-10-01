@@ -34,8 +34,8 @@ router.get("/map", async (req, res, next) => {
   }
 });
 
-router.get('/', function(req, res, next) {
-  res.render('map');
+router.get("/", function (req, res, next) {
+  res.render("map");
 });
 
 router.get("/map", function (req, res) {
@@ -58,13 +58,13 @@ router.get("/associations", (req, res, next) => {
   console.log(req.body, "this is body");
   console.log(req.params, "this is req params-----");
 
- AssoModel.find({})
-   .then((dbResult) => {
-     res.render("assos", { assos: dbResult });
-   })
-   .catch((error) => {
-     next(error);
-   });
+  AssoModel.find({})
+    .then((dbResult) => {
+      res.render("assos", { assos: dbResult });
+    })
+    .catch((error) => {
+      next(error);
+    });
 });
 
 
@@ -73,17 +73,27 @@ router.get("/associations", (req, res, next) => {
 
 router.get("/mes-informations", async (req, res, next) => {
   try {
-    console.log(req.session.userType)
-  if (req.session.userType === "asso") {
-  console.log(req.session.currentUser._id)
-  const infos = await AssoModel.findById(req.session.currentUser._id);
-  res.render("mes_informations", { infos });
-} else {
-  res.render("mes_informations")
-}
-} catch (error) {
-  next(error);
-}
+    console.log(req.session.userType);
+    if (req.session.userType === "asso") {
+      console.log(req.session.currentUser._id);
+      const infos = await AssoModel.findById(req.session.currentUser._id);
+      res.render("mes_informations", { infos });
+    } else {
+      res.render("mes_informations");
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/mes-informations", (req, res, next) => {
+  MapEventModel.find({}) // --- ^
+    .then((dbResult) => {
+      res.render("mes_informations", { mapEvents: dbResult });
+    })
+    .catch((error) => {
+      next(error);
+    });
 });
 
 // AssoModel.findById(req.session.currentUser._id).then({})
@@ -140,7 +150,6 @@ router.post("/infos-edit/:id", uploader.single("image"),
 /* DELETE MAP-EVENTS DANS L' HISTORIQUE */
 
 router.get("/historique_mapEvents_row/:id/delete", (req, res, next) => {
-
   const mapEventsId = req.params.id;
   MapEventModel.findByIdAndDelete(mapEventsId)
     .then((dbResult) => {
@@ -151,8 +160,9 @@ router.get("/historique_mapEvents_row/:id/delete", (req, res, next) => {
     });
 });
 
-
-
+// router.get("/one-product/:id", (req, res) => {
+//   res.render("one_product");
+// });
 
 //////////// AUTH ROUTES
 
@@ -255,7 +265,7 @@ router.post("/signInUser", async (req, res, next) => {
       const userObject = foundUser.toObject();
       delete userObject.password;
       req.session.currentUser = userObject;
-      req.session.userType = "user"
+      req.session.userType = "user";
       req.flash("success", "Successfully logged in...");
       res.redirect("/");
     }
@@ -280,7 +290,7 @@ router.post("/signInAsso", async (req, res, next) => {
       const userObject = foundUser.toObject();
       delete userObject.password;
       req.session.currentUser = userObject;
-      req.session.userType = "asso"
+      req.session.userType = "asso";
       // req.flash("success", "Successfully logged in...");
       res.redirect("/");
     }
@@ -295,7 +305,5 @@ router.get("/logout", (req, res, next) => {
     res.redirect("/");
   });
 });
-
-
 
 module.exports = router;
