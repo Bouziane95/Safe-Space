@@ -3,8 +3,8 @@ var router =  new express.Router();
 const UserModel = require("../models/User");
 const bcrypt = require("bcrypt");
 
-router.get('/signup', function(req, res, next) {
-    res.render('signup.hbs');
+router.get('/signin', function(req, res, next) {
+    res.render('assos/signin.hbs');
   });
 
 module.exports = router;

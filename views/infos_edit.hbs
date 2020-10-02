@@ -1,51 +1,45 @@
-<h1>info edit</h1>
-
 <h1 class="flex-choice">Editer votre association</h1>
 
-<section id="sign-up-asso">
+<form method="POST" class="ui form flex-sign" action="/infos-edit/{{infos._id}}" id="form-user" enctype="multipart/form-data">
 
-    <form method="POST" action="/infos-edit/{{infos._id}}" id="form-user" enctype="multipart/form-data">
+        <div class="field field-signup">
+                <label for="name">Nom</label>
+                <input type="text" id="name" name="name" value="{{infos.name}}">
+        </div>
 
-<div class="ui form flex-sign">
-<div class="field">
-        <label for="name">Nom</label>
-        <input type="text" id="name" name="name" value="{{infos.name}}">
-</div>
+        <div class="field field-signup">
+                <label for="address">Adresse</label>
+                <input type="text" id="address" name="address" value="{{infos.address}}">
+        </div>
 
-<div class="field">
-        <label for="address">Adresse</label>
-        <input type="text" id="address" name="address" value="{{infos.address}}">
-</div>
+        <div class="field field-signup">
+                <label for="tel">Téléphone</label>
+                <input type="text" id="tel" name="tel" value="{{infos.tel}}">
+        </div>
 
-<div class="field">
-        <label for="tel">Téléphone</label>
-        <input type="text" id="tel" name="tel" value="{{infos.tel}}">
-</div>
+        <div class="field field-signup">
+                <label for="description">Description</label>
+                <textarea type="text" id="description" name="description">{{infos.description}}</textarea>
+        </div>
 
-<div class="field">
-        <label for="description">Description</label>
-        <input type="text" id="description" name="description" value="{{infos.description}}">
-</div>
+        <div class="field field-signup">
+                <label for="link">Lien</label>
+                <input type="text" id="link" name="link" value="{{infos.link}}">
+        </div>
 
-<div class="field">
-        <label for="link">Lien</label>
-        <input type="text" id="link" name="link" value="{{infos.link}}">
-</div>
+        <div class="field field-signup">
+                <label for="mail">E-mail</label>
+                <input type="text" id="mail" name="email" value="{{infos.email}}">
+        </div>
+        <div class="field field-signup">
+                <label for="password" class="password-label">Password</label>
+                <input id="user-password" type="password" placeholder="••••••" name="password" required value="{{infos.password}}">
+        </div>
+        <div class="field field-signup">
+                <label for="image">Image</label>
+                <input type="file" id="image" name="image" value="{{infos.image}}">
+        </div>
 
-<div class="field">
-        <label for="mail">E-mail</label>
-        <input type="text" id="mail" name="email" value="{{infos.email}}">
-</div>
-<div class="field">
-        <label for="password" class="password-label">Password</label>
-        <input id="user-password" type="password" placeholder="••••••" name="password" required value="{{infos.password}}">
-</div>
-<div class="field">
-        <label for="image">Image</label>
-        <input type="file" id="image" name="image" value="{{infos.image}}">
-</div>
-
-       <button class="ui secondary button">Editer</button>
-</div>
-    </form>
+        <button class="ui secondary button">Editer</button>
+</form>
     {{> flash_message}}

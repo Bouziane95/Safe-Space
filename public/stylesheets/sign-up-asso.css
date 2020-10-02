@@ -1,0 +1,10 @@
+.field-signup {
+    width: 350px;
+}
+
+@media screen and (max-width: 400px)
+{
+    .field-signup {
+        width: 250px;
+    }    
+}
