@@ -4,7 +4,9 @@
 	flex-wrap: nowrap;
 	justify-content: center;
 	align-items: stretch;
-	align-content: stretch;
+  align-content: stretch;
+  margin: 0 15px 0 15px;
+  text-align: center;
 }
 
 #marker {
@@ -166,6 +168,19 @@ input[type=password]:hover {
   justify-content: flex-start;
 }
 
+.home-logo {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: center;
+  align-content: stretch;
+}
+
+.home-logo img{
+	max-height: 190px;
+}
+
 @media screen and (max-width: 800px)
 {
   #map-form {
@@ -215,5 +230,12 @@ input[type=password]:hover {
 {
   .form-card {
     width: 45vh;
+  }
+}
+
+@media screen and (max-width: 650px)
+{
+  .home-logo img {
+    max-height: 60px;
   }
 }
