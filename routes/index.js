@@ -162,7 +162,7 @@ router.get("/historique_mapEvents_row/:id/delete", async (req, res, next) => {
 ////// SIGN UP
 
 router.get("/signup", function (req, res, next) {
-  res.render("choiceSignup");
+  res.render("choiceSignUp");
 });
 
 router.get("/signUpUser", function (req, res, next) {
