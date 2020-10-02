@@ -229,6 +229,8 @@ router.get("/signInUser", function (req, res, next) {
   res.render("signInUser");
 });
 
+console.log("toto")
+
 router.get("/signInAsso", function (req, res, next) {
   res.render("signInAsso");
 });
