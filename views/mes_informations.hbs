@@ -13,7 +13,6 @@
         <th><div class="hidden-th-historique">Détails</div></th>
         <th><div class="hidden-th-historique">Supprimer</div></th>
       </tr>
-       
     </thead>
     <tbody>
       {{#each infos.events}}
@@ -21,12 +20,6 @@
         {{> historique_mapEvents_row}}
       </tr>
       {{/each}}
-
-      {{#unless infos.events}}
-      <tr>
-        <td colspan="6">Pas d'événements enregistrés</td>
-      </tr>
-      {{/unless}}
     </tbody>
   </table>
 </div>
