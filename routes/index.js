@@ -128,8 +128,6 @@ router.post(
   }
 );
 
-
-
 //DELETED MAP-EVENTS DANS L'HISTORIQUE
 
 router.get("/historique_mapEvents_row/:id/delete", async (req, res, next) => {
@@ -222,6 +220,7 @@ router.post("/addAsso", uploader.single("image"), async (req, res, next) => {
 
 /////// SIGN IN
 
+
 router.get("/signin", function (req, res, next) {
   res.render("choiceSignIn");
 });
@@ -229,8 +228,6 @@ router.get("/signin", function (req, res, next) {
 router.get("/signInUser", function (req, res, next) {
   res.render("signInUser");
 });
-
-console.log("rr");
 
 router.get("/signInAsso", function (req, res, next) {
   res.render("signInAsso");
@@ -287,7 +284,6 @@ router.post("/signInAsso", async (req, res, next) => {
 });
 
 // LOGOUT
-
 router.get("/logout", (req, res, next) => {
   req.session.destroy((err) => {
     if (err) return next(err);
