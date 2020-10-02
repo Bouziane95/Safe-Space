@@ -2,28 +2,24 @@
 
     {{> informations_association}}
 
-  <table id="table-map-event-gestion">
+<h1>Historique de mes signalements</h1>
+
+<div id="container-table-historique">
+  <table class="ui fixed table" id="table-historique">    
     <thead>
       <tr>
-        <th class="table-head-map-event-gestion">Date</th>
-        <th class="table-head-map-event-gestion">Lieu</th>
-        <th class="table-head-map-event-gestion">Détails</th>
-        <th class="table-head-map-event-gestion">Delete</th>
+        <th><div class="hidden-th-historique">Date</div></th>
+        <th><div class="hidden-th-historique">Lieu</div></th>
+        <th><div class="hidden-th-historique">Détails</div></th>
+        <th><div class="hidden-th-historique">Supprimer</div></th>
       </tr>
     </thead>
-
     <tbody>
       {{#each infos.events}}
       <tr>
         {{> historique_mapEvents_row}}
       </tr>
       {{/each}}
-
-      {{#unless infos.events}}
-      <tr>
-        <td colspan="6">Pas d'événements enregistrés</td>
-      </tr>
-      {{/unless}}
-
     </tbody>
   </table>
+</div>

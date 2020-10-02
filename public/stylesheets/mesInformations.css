@@ -3,7 +3,7 @@
     border-radius: 8px;
     display: flex;
     padding: 40px;
-    margin: 5vw;
+    margin: 2vw 5vw 5vw 5vw;
 }
 
 .contain-img {
@@ -13,7 +13,6 @@
 }
 
 #container-text-infos-assos {
-    /* border: 1px solid green; */
     padding: 20px 40px;
     width: 55vw;
     line-height: 1.7em;
@@ -42,6 +41,39 @@
     margin-top: 20px;
 }
 
+#container-table-historique {
+    display: flex;
+    justify-content: center;
+}
+
+#table-historique {
+    width: 1000px;
+    margin: 20px 0 80px 0;
+}
+
+#btn-suppr-historique {
+    margin-left: 20px;
+}
+
+.black-btn {
+    color: whitesmoke;
+}
+
+.black-btn:hover {
+    color: whitesmoke;
+}
+
+#btn-edit {
+    margin-bottom: 50px;
+}
+
+@media screen and (max-width: 800px)
+{
+    .hidden-th-historique {
+        display: none;
+    }
+}
+
 @media screen and (max-width: 800px)
 {
     #main-container-infos-assos {
@@ -56,11 +88,37 @@
     }
 }
 
-
-/* @media screen and (max-width: 800px)
+@media screen and (max-width: 1200px)
 {
-    .contain-img {
-        justify-content: flex-start;
-        align-items: center;
+    #table-historique {
+        width: 800px;
     }
-} */
+}
+
+@media screen and (max-width: 900px)
+{
+    #table-historique {
+        width: 600px;
+    }
+}
+
+@media screen and (max-width: 760px)
+{
+    #table-historique {
+        width: 400px;
+    }
+}
+
+@media screen and (max-width: 400px)
+{
+    #table-historique {
+        width: 300px;
+    }
+}
+
+@media screen and (min-width: 1770px)
+{
+    #table-historique {
+        width: 1400px;
+    }
+}

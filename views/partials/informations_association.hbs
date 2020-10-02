@@ -1,32 +1,27 @@
-{{!-- <h2>informations association</h2> --}}
 <div id="global-contain-infos-assos">
-        <div id="main-container-infos-assos">
-                
-                <div class="contain-img">
-                    <img src="{{infos.image}}" alt="picture" height="150px">
+        <div id="main-container-infos-assos"> 
+            <div class="contain-img">
+                <img src="{{infos.image}}" alt="picture" height="150px">
+            </div>
+            <div id="container-text-infos-assos">
+                <div>
+                    <span id="name-info">{{infos.name}}</span> 
+                    <br><br>
+                    <span>Adresse: </span> {{infos.address}}
+                    <br>
+                    <span>Téléphone: </span> {{infos.tel}}
+                    <br>
+                    <span>E-mail: </span>  {{infos.email}}
+                    <br>
+                    <span>Lien: </span> <a href="{{infos.link}}" class="link">{{infos.link}}</a>
+                    <br>
+                    <span>Description: </span> {{infos.description}}
                 </div>
-                <div id="container-text-infos-assos">
-                    <div>
-                        <span id="name-info">{{infos.name}}</span> 
-                        <br><br>
-                        <span>Adresse: </span> {{infos.address}}
-                        <br>
-                        <span>Téléphone: </span> {{infos.tel}}
-                        <br>
-                        <span>E-mail: </span>  {{infos.email}}
-                        <br>
-                        <span>Lien: </span> <a href="{{infos.link}}" class="link">{{infos.link}}</a>
-                        <br>
-                        <span>Description: </span> {{infos.description}}
-                    </div>
-                    <div id="btn-edit-info">
-                        <button class="ui secondary button" id="blabla">
-                            <a href="/infos-edit/{{infos._id}}">Editer</a>                   
-                        </button>
-                    </div>
+                <div id="btn-edit-info">
+                    <button class="ui secondary button">
+                        <a href="/infos-edit/{{infos._id}}" class="black-btn">Editer</a>                   
+                    </button>
                 </div>
-
+            </div>
         </div> 
-
-
 </div>

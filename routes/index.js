@@ -69,8 +69,6 @@ router.get("/events", function (req, res, next) {
 /* GET association page. */
 
 router.get("/associations", (req, res, next) => {
-  console.log(req.body, "this is body");
-  console.log(req.params, "this is req params-----");
 
   AssoModel.find({})
     .then((dbResult) => {
@@ -123,13 +121,10 @@ router.post(
 
     try {
       const infoId = req.params.id;
-      const infoAsso = req.body;
-      const hashedPassword = bcrypt.hashSync(infoAsso.password, salt);
-      infoAsso.password = hashedPassword;
       const updatedInfo = await AssoModel.findByIdAndUpdate(infoId, req.body);
       res.redirect("/mes-informations");
     } catch (error) {
-      next(error); //
+      next(error); 
     }
   }
 );
