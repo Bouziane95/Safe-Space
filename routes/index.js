@@ -121,9 +121,6 @@ router.post("/infos-edit/:id", uploader.single("image"),
 
     try {
       const infoId = req.params.id;
-      const infoAsso = req.body;
-      const hashedPassword = bcrypt.hashSync(infoAsso.password, salt);
-      infoAsso.password = hashedPassword;
       const updatedInfo = await AssoModel.findByIdAndUpdate(infoId, req.body);
       res.redirect("/mes-informations");
     } catch (error) {

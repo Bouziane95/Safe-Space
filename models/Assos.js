@@ -10,7 +10,10 @@ const AssosSchema = new Schema({
   description: String,
   link: String,
   password: String,
-  image: String,
+  image: {
+    type: String,
+    default: "https://s3.amazonaws.com/37assets/svn/765-default-avatar.png",
+  },
   events: [{type:Schema.Types.ObjectId, ref:"MapEvent"}]
 });
 

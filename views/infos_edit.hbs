@@ -32,14 +32,10 @@
                 <input type="text" id="mail" name="email" value="{{infos.email}}">
         </div>
         <div class="field field-signup">
-                <label for="password" class="password-label">Password</label>
-                <input id="user-password" type="password" placeholder="••••••" name="password" required value="{{infos.password}}">
-        </div>
-        <div class="field field-signup">
                 <label for="image">Image</label>
                 <input type="file" id="image" name="image" value="{{infos.image}}">
         </div>
 
-        <button class="ui secondary button">Editer</button>
+        <button class="ui secondary button" id="btn-edit">Editer</button>
 </form>
     {{> flash_message}}

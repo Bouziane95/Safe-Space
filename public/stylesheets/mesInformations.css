@@ -63,6 +63,10 @@
     color: whitesmoke;
 }
 
+#btn-edit {
+    margin-bottom: 50px;
+}
+
 @media screen and (max-width: 800px)
 {
     .hidden-th-historique {
