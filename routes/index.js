@@ -69,7 +69,6 @@ router.get("/events", function (req, res, next) {
 /* GET association page. */
 
 router.get("/associations", (req, res, next) => {
-
   AssoModel.find({})
     .then((dbResult) => {
       res.render("assos", { assos: dbResult });
@@ -124,10 +123,12 @@ router.post(
       const updatedInfo = await AssoModel.findByIdAndUpdate(infoId, req.body);
       res.redirect("/mes-informations");
     } catch (error) {
-      next(error); 
+      next(error);
     }
   }
 );
+
+
 
 //DELETED MAP-EVENTS DANS L'HISTORIQUE
 
@@ -229,7 +230,7 @@ router.get("/signInUser", function (req, res, next) {
   res.render("signInUser");
 });
 
-console.log("toto")
+console.log("rr");
 
 router.get("/signInAsso", function (req, res, next) {
   res.render("signInAsso");
