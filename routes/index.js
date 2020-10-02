@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-var dayjs = require('dayjs')
+var dayjs = require("dayjs");
 
 const bcrypt = require("bcrypt");
 const salt = 10;
@@ -12,7 +12,6 @@ const UserModel = require("../models/User");
 const AssoModel = require("../models/Assos");
 const MapEventModel = require("../models/MapEvent");
 const MapEvent = require("../models/MapEvent");
-
 
 ///ROUTES
 
@@ -70,7 +69,6 @@ router.get("/events", function (req, res, next) {
 /* GET association page. */
 
 router.get("/associations", (req, res, next) => {
-
   AssoModel.find({})
     .then((dbResult) => {
       res.render("assos", { assos: dbResult });
@@ -112,9 +110,10 @@ router.get("/infos-edit/:id", async (req, res, next) => {
   }
 });
 
-router.post("/infos-edit/:id", uploader.single("image"),
- async (req, res, next) => {
-    
+router.post(
+  "/infos-edit/:id",
+  uploader.single("image"),
+  async (req, res, next) => {
     if (req.file) {
       req.body.image = req.file.path;
     }
@@ -124,34 +123,39 @@ router.post("/infos-edit/:id", uploader.single("image"),
       const updatedInfo = await AssoModel.findByIdAndUpdate(infoId, req.body);
       res.redirect("/mes-informations");
     } catch (error) {
-      next(error); 
+      next(error);
     }
   }
 );
 
+
+
 //DELETED MAP-EVENTS DANS L'HISTORIQUE
 
 router.get("/historique_mapEvents_row/:id/delete", async (req, res, next) => {
-try {
+  try {
+    const mapEventsId = req.params.id;
 
-  const mapEventsId = req.params.id;
+    const deletedEvent = await MapEventModel.findByIdAndDelete(mapEventsId);
 
-  const deletedEvent = await MapEventModel.findByIdAndDelete(mapEventsId);
-
-  if (req.session.userType === "asso") {
-    const deletedAssoEvent = await AssoModel.findByIdAndUpdate(req.session.currentUser._id,{$pull: {events:deletedEvent._id }});
-    res.redirect("/mes-informations");
-  } else if 
-    (req.session.userType ==="user") {
-      const deletedUserEvent = await UserModel.findByIdAndUpdate(req.session.currentUser._id,{$pull: {events:deletedEvent._id }});
+    if (req.session.userType === "asso") {
+      const deletedAssoEvent = await AssoModel.findByIdAndUpdate(
+        req.session.currentUser._id,
+        { $pull: { events: deletedEvent._id } }
+      );
+      res.redirect("/mes-informations");
+    } else if (req.session.userType === "user") {
+      const deletedUserEvent = await UserModel.findByIdAndUpdate(
+        req.session.currentUser._id,
+        { $pull: { events: deletedEvent._id } }
+      );
       res.redirect("/mes-informations");
     } else {
-
-  res.redirect("/");
+      res.redirect("/");
     }
-} catch (error) {
-  next(error);
-}
+  } catch (error) {
+    next(error);
+  }
 });
 
 //////////// AUTH ROUTES
@@ -159,7 +163,7 @@ try {
 ////// SIGN UP
 
 router.get("/signup", function (req, res, next) {
-  res.render("choiceSignup");
+  res.render("choiceSignUp");
 });
 
 router.get("/signUpUser", function (req, res, next) {
@@ -191,12 +195,10 @@ router.post("/addUser", async (req, res, next) => {
   }
 });
 
-router.post("/addAsso", uploader.single("image"),
-  async (req, res, next) => {
-
-    if (req.file) {
-      req.body.image = req.file.path;
-    }
+router.post("/addAsso", uploader.single("image"), async (req, res, next) => {
+  if (req.file) {
+    req.body.image = req.file.path;
+  }
 
   try {
     const newUser = req.body;
@@ -221,12 +223,14 @@ router.post("/addAsso", uploader.single("image"),
 /////// SIGN IN
 
 router.get("/signin", function (req, res, next) {
-  res.render("choiceSignin");
+  res.render("choiceSignIn");
 });
 
 router.get("/signInUser", function (req, res, next) {
   res.render("signInUser");
 });
+
+console.log("rr");
 
 router.get("/signInAsso", function (req, res, next) {
   res.render("signInAsso");
@@ -250,7 +254,7 @@ router.post("/signInUser", async (req, res, next) => {
       const userObject = foundUser.toObject();
       delete userObject.password;
       req.session.currentUser = userObject;
-      req.session.userType = "user"
+      req.session.userType = "user";
       req.flash("success", "Successfully logged in...");
       res.redirect("/");
     }
