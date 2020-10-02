@@ -222,7 +222,7 @@ router.post("/addAsso", uploader.single("image"), async (req, res, next) => {
 /////// SIGN IN
 
 router.get("/signin", function (req, res, next) {
-  res.render("choiceSignin");
+  res.render("choiceSignIn");
 });
 
 router.get("/signInUser", function (req, res, next) {
