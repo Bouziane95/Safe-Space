@@ -1,3 +1,11 @@
+.align-text {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: stretch;
+	align-content: stretch;
+}
 
 #marker {
   background-image: url("/images/cross.png");
@@ -33,6 +41,8 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-bottom: 30px;
+  padding: 10px;
 }
 
 .form-card {
@@ -159,6 +169,8 @@ a {
   width: 500px;
   height: 500px;
   border-radius: 4px;
+  border: 1px solid black;
+  margin-bottom: 20px;
 }
 
 #form-map-events {

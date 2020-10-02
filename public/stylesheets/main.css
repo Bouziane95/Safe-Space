@@ -2,6 +2,7 @@
 @import "./homepage.css";
 @import "./association.css";
 @import "./mesInformations.css";
+@import "./footer.css";
 
 
 @import url("https://fonts.googleapis.com/css2?family=Hind+Guntur:wght@300&display=swap");
@@ -42,4 +43,16 @@
 	align-content: stretch;
 }
 
+.home-logo {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: center;
+  align-content: stretch;
+}
+
+.home-logo img{
+	max-height: 190px;
+}
 
