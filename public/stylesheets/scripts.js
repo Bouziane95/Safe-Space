@@ -28,16 +28,16 @@ function loadMapGeoUser(pos) {
     center: [crd.longitude, crd.latitude],
   });
 
-  var popuup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-    `<center><h4>${"Mercredi 23 Septembre"}</h4></center><p>${"IronHack"}</p><p>${"Aggression AJAX"}</p>`
-  );
-  var elFrank = document.createElement("div");
-  elFrank.id = "marker-frank";
+  // var popuup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+  //   `<center><h4>${"Mercredi 23 Septembre"}</h4></center><p>${"IronHack"}</p><p>${"Aggression AJAX"}</p>`
+  // );
+  // var elFrank = document.createElement("div");
+  // elFrank.id = "marker-frank";
 
-  new mapboxgl.Marker(elFrank)
-    .setLngLat([2.3884192, 48.8526736])
-    .setPopup(popuup)
-    .addTo(map);
+  // new mapboxgl.Marker(elFrank)
+  //   .setLngLat([2.3884192, 48.8526736])
+  //   .setPopup(popuup)
+  //   .addTo(map);
 
   map.on("load", () => {
     safeSpaceAPI
@@ -126,8 +126,6 @@ function loadMap() {
     zoom: 11,
     center: [2.3488, 48.8534],
   });
-
-  loadFrankHead();
 
   map.on("load", () => {
     safeSpaceAPI
